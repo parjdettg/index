@@ -320,3 +320,34 @@ footer {
     color: #888; 
     margin-top: 20px !important; /* 위쪽 여백을 확실하게 확보 */
 }
+
+/* --- 페이지 공통 섹션 스타일 --- */
+.content-section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* 내용을 중앙에 배치 */
+}
+
+/* --- 인사말 구획 분리 CSS (Mobile-Friendly) --- */
+.intro-grid {
+    display: flex;
+    gap: 30px;
+    margin: 40px 0;
+    flex-wrap: wrap; /* 모바일에서 세로로 자동 줄바꿈 */
+    text-align: left;
+}
+
+.intro-grid .column-photo {
+    flex: 0 0 200px; /* PC에서 사진 영역 고정 */
+    text-align: center;
+}
+
+.intro-grid .column-text {
+    flex-grow: 1; /* 나머지 공간 모두 차지 */
+}
+
+/* --- 미션 및 비전 제목 스타일 --- */
+.mission-title {
+    padding: 40px 0 20px;
+}
+
