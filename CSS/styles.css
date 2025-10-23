@@ -1,353 +1,951 @@
-body {
-    font-family: '나눔고딕 ExtraBold', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+/* =================================
+   1. 페이지 기본 스타일 (초기화)
+==================================== */
+body, html {
     margin: 0;
-    padding-top: 0; 
-    background-color: #f8f8f8;
+    padding: 0;
+    font-family: '나눔고딕 ExtraBold', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background-color: #f8f8f8; /* 기본 배경색 */
+    box-sizing: border-box; /* 모든 요소의 크기 계산을 쉽게 함 */
 }
 
-/* --- 1. 내비게이션 스타일 --- */
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px; /* 사이트 콘텐츠의 최대 너비 */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 0 20px; /* 좌우 여백 */
+}
+
+/* =================================
+   2. 헤더 (공통 스타일)
+==================================== */
 .main-header {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: transparent;
-    box-shadow: none;
     z-index: 1000;
+    padding: 15px 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: 800;
-    color: white; 
-    text-decoration: none;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
-    
-}
-/* --- 로고 영문 명칭 스타일 --- */
-.en-logo-text {
-    font-size: 10px; 
-    font-weight: 400; 
-    color: rgba(255, 255, 255, 0.8); 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px;
-    line-height: 1;
-    text-shadow: none; 
-    margin-top: -5px; 
-    
-}
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    width: 100%; 
+    padding: 0 20px;
 }
 
 .logo {
     font-size: 20px;
     font-weight: 800;
-    color: white; 
     text-decoration: none;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.en-logo-text {
+    display: block;
+    font-size: 10px; 
+    font-weight: 400; 
+    text-shadow: none; 
 }
 
 .nav-menu {
-    /* 메뉴 항목들을 가로로 정렬하고 간격을 일정하게 배치합니다 */
     display: flex;
-    gap: 30px; /* 메뉴 항목 간의 간격을 30px로 설정 (원하는 만큼 조정 가능) */
-    list-style: none; /* 리스트 점 제거 (혹시 ul/li를 사용했다면) */
-    padding: 0;
-    margin: 0;
-    
-    /* 중요: 로고를 왼쪽으로 밀고 메뉴를 중앙에 배치하기 위한 공간 확보 */
-    flex-grow: 1; 
-    justify-content: center;
+    gap: 30px;
 }
 
 .nav-menu a {
-    /*  padding 값은 유지하여 클릭 영역을 넓게 확보  */
     text-decoration: none;
-    color: white !important;
-    padding: 10px 15px; 
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    text-align: center;
-    transition: color 0.3s, font-size 0.3s; 
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-menu a:visited {
-    color: white !important;
+/* --- 2-1. index.html (메인) 헤더 전용 스타일 --- */
+.page-index .main-header {
+    position: absolute; /* 메인에선 이미지 위에 겹치기 */
+    background-color: transparent;
 }
-.nav-menu a:hover {
-    color: #3B7A57 !important;
-    font-size: 17px;
+.page-index .logo,
+.page-index .nav-menu a {
+    color: white; /* 흰색 글씨 */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* 그림자 */
+}
+.page-index .en-logo-text {
+    color: rgba(255, 255, 255, 0.9);
+}
+.page-index .nav-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* --- 2. 메인 커버 섹션 스타일 --- */
+/* --- 2-2. about.html (서브) 헤더 전용 스타일 --- */
+.page-about .main-header {
+    position: relative; /* 서브에선 일반 흐름대로 */
+    background-color: white; /* 흰색 배경 */
+    border-bottom: 1px solid #eee; /* 하단 구분선 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 은은한 그림자 */
+}
+.page-about .logo,
+.page-about .nav-menu a {
+    color: #333333; /* 어두운 글씨 */
+    text-shadow: none; /* 그림자 없음 */
+}
+.page-about .en-logo-text {
+    color: #777777;
+}
+.page-about .nav-menu a:hover {
+    background-color: #f4f4f4;
+    color: #3B7A57; /* 메인 컬러 */
+}
+
+/* =================================
+   3. 메인 배경 이미지 (Hero 섹션)
+==================================== */
 .hero-section {
+    min-height: 100vh; 
     color: white;
-    text-align: center;
-    padding: 200px 20px 400px;
-    position: relative;
-    overflow: hidden;
+    /* ★ background-image 속성은 삭제합니다. */
+    position: relative; /* ★ 하위 요소를 정렬할 기준점 */
     display: flex;
-    align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    padding: 0;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* ★ 삐져나가는 요소 숨기기 */
+}
 
-    /* ✨ 슬라이드 쇼 핵심 설정 ✨ */
-    /* 여러 장의 이미지를 , 로 구분하여 나열합니다. */
-    background-image: 
-        url('../images/main.jpg'), 
-        url('../images/main2.jpg'),
-        url('../images/main3.jpg'); 
-        
+.slide-backgrounds {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* ★ z-index: 0 (콘텐츠보다 뒤에 있도록) */
+    z-index: 0; 
+}
+
+.slide-item {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    
     background-size: cover;
     background-position: center center;
     
-    /* 🌟 애니메이션 적용 🌟 */
-    animation: slideBackground 15s infinite; /* 15초 동안 무한 반복 (각 이미지 5초 노출) */
+    opacity: 0; /* ★ 평소엔 투명 */
+    /* ★ 1.5초 동안 부드럽게 나타나고 사라짐 */
+    transition: opacity 1.5s ease-in-out; 
+    
+    z-index: 1;
 }
 
-@keyframes slideBackground {
-    /* 0% ~ 33.33%: 첫 번째 이미지 */
-    0% { background-image: url('../images/main.jpg'); }
-    30% { background-image: url('../images/main.jpg'); } /* 3초 유지 */
-
-    /* 33.33% ~ 66.66%: 두 번째 이미지로 전환 */
-    33.33% { background-image: url('../images/main2.jpg'); }
-    63.33% { background-image: url('../images/main2.jpg'); } /* 3초 유지 */
-
-    /* 66.66% ~ 100%: 세 번째 이미지로 전환 */
-    66.66% { background-image: url('../images/main3.jpg'); }
-    96.66% { background-image: url('../images/main3.jpg'); } /* 3초 유지 */
-
-    /* 100%는 다시 0%로 돌아가 반복 */
-    100% { background-image: url('../images/main.jpg'); }
-}
-@media screen and (max-width: 768px) {
-    /* ... 기존 모바일 폰트 크기 조정 CSS를 여기에 유지 ... */
+.slide-item.active {
+    opacity: 1; /* ★ 불투명하게 보임 */
+    z-index: 2; /* 다른 슬라이드보다 위로 */
 }
 
-/* css/styles.css 파일에 추가 */
-
-/* --- 영문 서브 타이틀 스타일 --- */
-.hero-content .en-sub-title {
-    font-size: 20px; /* 적당한 크기 */
-    font-weight: 400; /* 너무 굵지 않게 */
-    margin: -15px 0 10px; /* 위쪽 여백 줄이고, 아래 여백 추가 */
-    color: rgba(255, 255, 255, 0.9); /* 약간 투명하게 하여 부드럽게 */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    letter-spacing: 1px; /* 글자 간격 살짝 넓혀서 모던하게 */
-    font-family: Arial, sans-serif; /* 영문에 어울리는 깔끔한 폰트 (고딕) */
-}
-
-/* --- 모바일 반응형: 영문 폰트 크기 조정 --- */
-@media screen and (max-width: 768px) {
-    .hero-content .en-sub-title {
-        font-size: 14px; /* 모바일에서 폰트 크기 축소 */
-    }
-}
-
-/* 배경 오버레이 (가독성 확보) */
 .hero-section::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6); /* 짙은 반투명 필터 */
-    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5); 
+    /* ★ z-index: 3 (슬라이드보다 위, 텍스트보다 아래) */
+    z-index: 3; 
 }
 
 .hero-content {
-    position: relative;
-    z-index: 2; /* 텍스트가 오버레이 위로 나오게 함 */
-    width: 100%;
-    max-width: 1200px;
+    position: relative; 
+    /* ★ z-index: 4 (가장 위에 보임) */
+    z-index: 4;
+    padding: 20px;
 }
 
 .hero-content h1 {
-    font-size: 70px;
+    font-size: 52px;
     font-weight: 800;
-    margin: 0 0 30px;
-    line-height: 1.3;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9); 
-    word-break: keep-all;
-    font-family: '나눔고딕 ExtraBold', 'Malgun Gothic', sans-serif;
+    margin: 0 0 15px 0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.hero-content .en-sub-title {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 25px 0;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 1px;
 }
 
 .hero-content p {
-    /* 🌟 폰트 크기 확대: 20px -> 24px */
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 500;
-    margin-top: 15px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9); /* 그림자 강화 */
-    word-break: keep-all;
-    
-    /* 소제목도 동일한 폰트 적용 */
-    font-family: '나눔고딕 ExtraBold', 'Malgun Gothic', sans-serif;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-@media screen and (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 36px; /* 모바일에서 36px로 축소 */
-    }
-    .hero-content p {
-        font-size: 18px; /* 모바일에서 18px로 축소 */
-    }
-}
-
-/* --- 3. CTA 버튼 스타일 --- */
 .cta-button {
     display: inline-block;
-    background-color: #3B7A57; /* 조합 메인 컬러 */
+    background-color: #3B7A57; 
     color: white;
     text-decoration: none;
-    padding: 12px 30px;
+    padding: 14px 35px;
     border-radius: 5px;
     font-weight: 600;
-    font-size: 16px;
-    letter-spacing: 1px; /* 글자 간격으로 모던함 강조 */
-    transition: background-color 0.3s;
+    font-size: 17px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .cta-button:hover {
-    background-color: #5aa667;
+    background-color: #5aa667; 
+    transform: translateY(-2px); 
 }
 
-/* --- 4. 모바일 반응형 디자인 --- */
-@media screen and (max-width: 768px) {
-    body { padding-top: 60px; }
-    .nav-menu { display: none; } /* 모바일에서는 메뉴 숨김 (햄버거 메뉴 구현 필요) */
-    .hero-section { padding: 100px 10px; }
-    
-    .hero-content h1 {
-        font-size: 28px; /* 모바일에서 폰트 크기 축소 */
-    }
+/* =================================
+   4. 관련 사이트 로고 섹션 (index.html)
+==================================== */
+/* =================================
+   4. 관련 사이트 로고 섹션 (index.html)
+==================================== */
+/* ★ .page-index 이름표 추가 */
+.page-index .partners-section {
+    background-color: #ffffff;
+    padding: 40px 0; 
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
-/* css/styles.css 파일에 추가 */
-
-/* --- 1. 링크 섹션 기본 스타일 --- */
-.partners-section {
-    padding: 30px 20px;
-    background-color: #f0f0f0; /* 배경색으로 깔끔하게 분리 */
-    border-bottom: 1px solid #ddd; /* 하단에 얇은 경계선 추가 */
+/* ★ .page-index 이름표 추가 */
+.page-index .link-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 40px 50px; 
 }
 
-.link-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between; /* 항목들을 균등하게 배치 */
-    align-items: center;
-    flex-wrap: wrap;
-    max-width: 900px;
-}
-
-/* --- 2. 개별 링크 항목 스타일 --- */
-.partner-item {
-    display: flex;
-    flex-direction: column; /* 이미지와 텍스트를 세로로 쌓음 */
-    align-items: center; /* 세로로 쌓인 요소를 가운데 정렬 */
+/* ★ .page-index 이름표 추가 */
+.page-index .partner-item {
     text-decoration: none;
-    color: #555;
-    padding: 10px 15px;
-    transition: color 0.3s;
 }
 
-.partner-item:hover {
-    color: #3B7A57; /* 호버 시 조합 메인 컬러로 변경 */
+/* ★ .page-index 이름표 추가 */
+.page-index .partner-item img {
+    height: 60px;
+    width: auto;
+    object-fit: contain; 
+    filter: grayscale(100%);
+    opacity: 0.7; 
+    transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-/* 이미지 스타일 */
-.partner-item img {
-    width: 250px; /* 로고 크기 고정 */
-    height: 250px;
-    object-fit: contain;
-    margin-bottom: 5px;
+/* ★ .page-index 이름표 추가 */
+.page-index .partner-item:hover img {
+    filter: grayscale(0%); 
+    opacity: 1.0; 
 }
 
-/* 텍스트 스타일 */
-.partner-item p {
-    font-size: 13px;
-    font-weight: 500;
-    margin: 0;
+/* ★ .page-index 이름표 추가 */
+.page-index .partner-item img.logo-nts {
+    height: 50px;
 }
 
-/* --- 3. 모바일 반응형 --- */
-@media screen and (max-width: 600px) {
-    .link-container {
-        justify-content: center; /* 모바일에서는 중앙 정렬 */
-    }
-    .partner-item {
-        flex-basis: 30%; /* 3개 항목이 한 줄에 꽉 차도록 */
-        padding: 10px 5px; /* 패딩을 줄여서 간격 확보 */
-    }
-}
-/* css/styles.css 파일에 추가 */
-
-/* --- 푸터 섹션 전체 스타일 --- */
+/* =================================
+   5. 푸터 (Footer) 섹션 (공통)
+==================================== */
 footer {
-    padding: 40px 20px; /* 상하 여백을 충분히 확보 */
-    background-color: #f0f0f0; /* 배경색을 연한 회색으로 유지 */
-    text-align: center; /* 모든 텍스트 중앙 정렬 */
-    border-top: 1px solid #ddd;
+    background-color: #f4f4f4;
+    padding: 50px 0; 
+    text-align: center; 
 }
 
-/* --- 조합 필수 정보 스타일 --- */
 .footer-info p {
-    font-size: 14px; /* 정보 텍스트 크기 */
-    color: #555; /* 진한 회색으로 정보가 눈에 잘 띄도록 */
-    margin: 5px 0; /* 각 줄 간격 확보 */
-    line-height: 1.5;
+    font-size: 15px; 
+    color: #555; 
+    line-height: 1.7; 
+    margin: 8px 0; 
+    font-weight: 400; /* 일반 굵기 */
 }
 
-/* 정보 구분선 (|) 스타일 */
 .info-divider {
-    color: #ccc;
-    margin: 0 10px;
-    font-weight: 300;
+    color: #ccc; 
+    margin: 0 10px; 
 }
 
-/* --- 저작권 문구 스타일 --- */
 .copyright {
-    font-size: 12px;
+    margin-top: 25px; 
+    font-size: 13px; 
     color: #888; 
-    margin-top: 20px !important; /* 위쪽 여백을 확실하게 확보 */
+    font-weight: 400; 
 }
 
-/* --- 페이지 공통 섹션 스타일 --- */
-.content-section {
-    padding: 80px 20px;
-    max-width: 1200px;
-    margin: 0 auto; /* 내용을 중앙에 배치 */
+/* =================================
+   6. 조합소개 (about.html) 전용 스타일
+   ( .page-about 클래스로 충돌 방지 )
+==================================== */
+
+/* --- 6-1. 이사장 인사말 섹션 --- */
+.page-about .greeting-section {
+    padding: 80px 0; 
+    background-color: #f9f9f9; 
 }
 
-/* --- 인사말 구획 분리 CSS (Mobile-Friendly) --- */
-.intro-grid {
+.page-about .section-title {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.page-about .greeting-box {
     display: flex;
-    gap: 30px;
-    margin: 40px 0;
-    flex-wrap: wrap; /* 모바일에서 세로로 자동 줄바꿈 */
-    text-align: left;
+    gap: 40px; 
+    background-color: #ffffff; 
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
 }
 
-.intro-grid .column-photo {
-    flex: 0 0 200px; /* PC에서 사진 영역 고정 */
+.page-about .greeting-photo {
+    flex-basis: 300px; 
+    flex-shrink: 0; 
     text-align: center;
 }
 
-.intro-grid .column-text {
-    flex-grow: 1; /* 나머지 공간 모두 차지 */
+.page-about .greeting-photo img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+    object-fit: cover; 
+    margin-bottom: 20px;
+
+    /* ★★★ 그라데이션 테두리로 변경 ★★★ */
+
+    /* 1. 테두리 두께(5px)를 지정하고, 색상은 '투명(transparent)'으로 합니다. */
+    border: 5px solid transparent;
+    
+    /* 2. 'border-image'를 사용해 테두리 영역에 그라데이션을 채웁니다. */
+    border-image-source: linear-gradient(to bottom right, #3B7A57, #a0cda7);
+    border-image-slice: 1;
 }
 
-/* --- 미션 및 비전 제목 스타일 --- */
-.mission-title {
-    padding: 40px 0 20px;
+.page-about .greeting-photo .chairperson-name {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: 400; 
 }
 
+.page-about .greeting-photo .chairperson-title {
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+}
+.page-about .greeting-photo .chairperson-title strong {
+    font-weight: 700; 
+}
+
+.page-about .greeting-text {
+    flex-grow: 1; 
+}
+
+.page-about .greeting-text .greeting-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #3B7A57; 
+    padding-bottom: 10px;
+}
+
+.page-about .greeting-text p {
+    font-size: 17px; 
+    line-height: 1.8; 
+    color: #444;
+    margin-bottom: 25px;
+    font-weight: 400; 
+}
+
+.page-about .signature-area {
+    text-align: right; 
+    margin-top: 40px;
+}
+
+.page-about .signature-area .signature-img {
+    max-width: 210px;
+    margin-bottom: 10px;
+}
+
+.page-about .signature-area .signature-line {
+    font-size: 19px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0;
+}
+.page-about .signature-area .signature-line strong {
+    font-weight: 700;
+}
+
+/* --- 6-2. 미션/비전 섹션 (카드) --- */
+.page-about .mission-section {
+    
+    /* background-color: #ffffff; (기존 흰색 배경 대신 그라데이션 사용) */
+
+    /* ★★★ 여기에 그라데이션 코드를 적용합니다! ★★★ */
+    /* 'to bottom' : 위에서 아래로
+      '#dcedde' : 사이트 메인 컬러와 어울리는 매우 연한 초록색
+      '#ffffff' : 끝 색상은 기존의 흰색
+    */
+    background: linear-gradient(to bottom, #eaf2eb, #ffffff);
+
+    padding: 80px 0;
+}
+
+.page-about .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px; 
+    margin-top: 30px; 
+    /* (index.html의 .card-grid와는 완전히 다르게 스타일됨) */
+}
+
+.page-about .card-item {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #ccc; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* (index.html의 .card-item과 다르게 스타일됨) */
+}
+
+.page-about .card-item:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.page-about .card-item .mission-number {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.page-about .card-item[data-color="blue"] {
+    border-top-color: #007bff;
+}
+.page-about .card-item[data-color="blue"] .mission-number {
+    color: #007bff;
+}
+
+.page-about .card-item[data-color="red"] {
+    border-top-color: #ff6347;
+}
+.page-about .card-item[data-color="red"] .mission-number {
+    color: #ff6347;
+}
+
+.page-about .card-item[data-color="green"] {
+    border-top-color: #3B7A57;
+}
+.page-about .card-item[data-color="green"] .mission-number {
+    color: #3B7A57;
+}
+
+.page-about .card-item h4 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.page-about .card-item p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+/* --- 6-3. 조직도 섹션 --- */
+.page-about .org-chart-title-area {
+    text-align: center;
+    margin-top: 80px; 
+    margin-bottom: 30px; 
+}
+
+.page-about .org-chart-title {
+    font-size: 32px; 
+    font-weight: 800; 
+    color: #1A1A1A; 
+    margin-bottom: 5px;
+}
+
+.page-about .org-chart-subtitle {
+    font-size: 18px; 
+    color: #4A4A4A; 
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+.page-about .org-chart-divider {
+    width: 60px; 
+    border: 2px solid #3B7A57; 
+    margin: 20px auto;
+}
+
+.page-about .org-chart-flow {
+    display: flex; 
+    flex-wrap: nowrap; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 15px; 
+    margin: 0 auto 40px auto; 
+    padding: 0 20px; 
+}
+
+.page-about .org-node {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px; 
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.page-about .org-node strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.page-about .org-node span {
+    font-size: 14px;
+    color: #555;
+    font-weight: 400;
+}
+
+.page-about .org-arrow {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3B7A57; 
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+/* =================================
+   7. 모바일 반응형 스타일 (전체)
+==================================== */
+
+@media (max-width: 768px) {
+    
+    /* --- 7-1. index.html 모바일 --- */
+    
+    .page-index .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    .page-index .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .page-index .nav-menu a {
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .page-index .nav-menu a:last-child {
+        border-bottom: none;
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+    .hero-content p {
+        font-size: 18px;
+    }
+
+    .page-index .link-container {
+        /* (PC에서는 justify-content: center 였음) */
+        /* 모바일에선 로고들이 세로로 쌓이도록 함 */
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    .page-index .partner-item img {
+        height: 50px; /* 모바일에선 로고 높이 50px */
+    }
+    .page-index .partner-item img.logo-nts {
+        height: 40px; /* 국세청은 40px */
+    }
+    
+    
+    /* --- 7-2. about.html 모바일 --- */
+
+    /* about 헤더는 PC와 동일하게 유지 (이미 1줄임) */
+    
+    .page-about .greeting-box {
+        flex-direction: column; /* 2단 -> 1단 쌓기 */
+        padding: 25px; 
+        gap: 25px; 
+    }
+
+    .page-about .card-grid {
+        grid-template-columns: 1fr; /* 3단 -> 1단 쌓기 */
+        gap: 20px; 
+    }
+
+    .page-about .org-chart-flow {
+        flex-wrap: wrap; /* 한 줄 -> 여러 줄로 줄바꿈 허용 */
+        justify-content: center;
+    }
+
+    .page-about .org-node {
+        flex-basis: 180px; 
+        flex-grow: 1; 
+    }
+
+    .page-about .greeting-photo {
+        flex-basis: auto; /* 고정 너비 해제 */
+        width: 100%;
+    }
+    
+    .page-about .greeting-text .greeting-title {
+        font-size: 28px; 
+    }
+
+    .page-about .card-grid {
+        grid-template-columns: 1fr; /* 3단 -> 1단 쌓기 */
+        gap: 20px; 
+    }
+
+    .page-about .org-chart-flow {
+        flex-wrap: wrap; /* 한줄 -> 여러줄 */
+        justify-content: center;
+    }
+
+    .page-about .org-node {
+        flex-basis: 180px; 
+        flex-grow: 1; 
+    }
+}
+
+/* --- 6-2. 미션/비전 섹션 (카드) --- */
+.page-about .mission-section {
+    /* '이사장 인사말'의 연한 회색(#f9f9f9)과 
+       구분되도록 흰색(#ffffff) 배경을 줍니다.
+    */
+    background-color: #ffffff; 
+    padding: 80px 0;
+    
+    /* (참고: .mission-section 안의 제목 부분은
+       about.html에 style="..." 속성으로 이미 
+       디자인이 적용되어 있습니다!)
+    */
+}
+
+/* '미션 카드' 3개를 감싸는 그리드 */
+.page-about .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px; /* 카드 사이의 간격 */
+    max-width: 900px;
+    margin: 30px auto 0;
+}
+
+/* 개별 미션 카드 스타일 */
+.page-about .card-item {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px; /* 모서리 둥글게 */
+    
+    /* 은은한 그림자 효과 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    
+    /* ★ HTML의 data-color 속성과 연동될 상단 테두리 */
+    border-top: 5px solid #ccc; /* 기본 회색 */
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 카드에 마우스를 올렸을 때 */
+.page-about .card-item:hover {
+    transform: translateY(-5px); /* 살짝 위로 이동 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* 그림자 진하게 */
+}
+
+/* 카드 안의 '01', '02', '03' 숫자 */
+.page-about .card-item .mission-number {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+/* ★ data-color 속성에 따라 색상 적용 */
+/* (스크린샷에 이미 색상이 있는 것으로 보아, 
+  HTML의 style 속성을 덮어쓰거나 대체합니다) 
+*/
+.page-about .card-item[data-color="blue"] {
+    border-top-color: #007bff;
+}
+.page-about .card-item[data-color="blue"] .mission-number {
+    color: #007bff;
+}
+
+.page-about .card-item[data-color="red"] {
+    border-top-color: #ff6347;
+}
+.page-about .card-item[data-color="red"] .mission-number {
+    color: #ff6347;
+}
+
+.page-about .card-item[data-color="green"] {
+    border-top-color: #3B7A57;
+}
+.page-about .card-item[data-color="green"] .mission-number {
+    color: #3B7A57;
+}
+
+/* 카드 안의 제목 (h4) */
+.page-about .card-item h4 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+/* 카드 안의 본문 (p) */
+.page-about .card-item p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 0;
+    font-weight: 400; /* ★ ExtraBold 덮어쓰기 (중요) */
+}
+
+
+/* --- 6-3. 조직도 섹션 --- */
+.page-about .org-chart-title-area {
+    text-align: center;
+    margin-top: 80px; /* 카드와 조직도 제목 사이 간격 */
+    margin-bottom: 30px; 
+}
+
+.page-about .org-chart-title {
+    font-size: 32px; 
+    font-weight: 800; 
+    color: #1A1A1A; 
+    margin-bottom: 5px;
+}
+
+.page-about .org-chart-subtitle {
+    font-size: 18px; 
+    color: #4A4A4A; 
+    margin-top: 5px;
+    font-weight: 400; /* ★ ExtraBold 덮어쓰기 */
+}
+
+.page-about .org-chart-divider {
+    width: 60px; 
+    border: 2px solid #3B7A57; 
+    margin: 20px auto;
+}
+
+/* 조직도 흐름도 (박스/화살표) */
+.page-about .org-chart-flow {
+    display: flex; /* ★ 세로로 쌓인(스크린샷) 박스들을 가로로 정렬 */
+    flex-wrap: nowrap; /* 한 줄로 표시 (모바일 제외) */
+    justify-content: center; 
+    align-items: center; 
+    gap: 15px; /* 박스와 화살표 사이 간격 */
+    margin: 0 auto 40px auto; 
+    padding: 0 20px; 
+}
+
+/* 조직도 박스 */
+.page-about .org-node {
+    background-color: #f8f9fa; /* 연한 회색 배경 */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px; 
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.page-about .org-node strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.page-about .org-node span {
+    font-size: 14px;
+    color: #555;
+    font-weight: 400; /* ★ ExtraBold 덮어쓰기 */
+}
+
+/* 화살표 */
+.page-about .org-arrow {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3B7A57; /* 메인 컬러 */
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+/* =================================
+   8. 정보공개 (disclosure.html) 전용 스타일
+   ( .page-disclosure 클래스로 충돌 방지 )
+==================================== */
+
+/* --- 8-1. 공통 스타일 --- */
+
+/* about.html의 헤더와 동일한 스타일 적용 */
+.page-disclosure .main-header {
+    position: relative; 
+    background-color: white; 
+    border-bottom: 1px solid #eee; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+}
+.page-disclosure .logo,
+.page-disclosure .nav-menu a {
+    color: #333333; 
+    text-shadow: none; 
+}
+.page-disclosure .en-logo-text {
+    color: #777777;
+}
+.page-disclosure .nav-menu a:hover {
+    background-color: #f4f4f4;
+    color: #3B7A57; 
+}
+
+/* 페이지 전체 섹션 */
+.page-disclosure .disclosure-section {
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 80px 0;
+}
+
+/* 페이지 제목 영역 */
+.page-disclosure .disclosure-title-area {
+    text-align: center;
+    margin-bottom: 50px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 30px;
+}
+
+.page-disclosure .disclosure-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-disclosure .disclosure-subtitle {
+    font-size: 18px;
+    color: #555;
+    margin: 0;
+    font-weight: 400; /* 일반 굵기 */
+}
+
+/* --- 8-2. 테이블 스타일 --- */
+
+.page-disclosure .disclosure-table-wrapper {
+    width: 100%;
+    /* 테이블이 길어질 경우 좌우 스크롤이 생기도록 */
+    overflow-x: auto; 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.page-disclosure .disclosure-table {
+    width: 100%;
+    border-collapse: collapse; /* 테두리 한 줄로 합치기 */
+    text-align: left;
+}
+
+/* 테이블 헤더 (thead) */
+.page-disclosure .disclosure-table th {
+    background-color: #f9f9f9; /* 연한 회색 배경 */
+    padding: 18px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+/* 테이블 본문 (tbody) */
+.page-disclosure .disclosure-table td {
+    padding: 20px 20px;
+    font-size: 16px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+    font-weight: 400; /* 일반 굵기 */
+    vertical-align: middle; /* 내용 세로 중앙 정렬 */
+}
+
+/* 마지막 줄만 하단 테두리 제거 */
+.page-disclosure .disclosure-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 각 열(column) 너비 조정 */
+.page-disclosure .col-year { width: 15%; }
+.page-disclosure .col-title { width: 40%; }
+.page-disclosure .col-donation { width: 20%; }
+.page-disclosure .col-link { width: 25%; text-align: center; }
+
+.page-disclosure .td-year strong {
+    font-weight: 700;
+    color: #3B7A57; /* 메인 컬러 */
+}
+
+/* --- 8-3. 다운로드 버튼 스타일 --- */
+.page-disclosure .download-button {
+    display: inline-block;
+    background-color: #3B7A57; /* 메인 컬러 */
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.page-disclosure .download-button:hover {
+    background-color: #2c5a41; /* 살짝 어둡게 */
+}
+
+/* --- 8-4. 정보공개 모바일 반응형 --- */
+@media (max-width: 768px) {
+    /* (헤더는 about.html과 공통 스타일 사용) */
+
+    .page-disclosure .disclosure-title {
+        font-size: 30px;
+    }
+
+    /* 모바일에선 테이블의 글꼴을 살짝 줄이고,
+      가로 스크롤이 생긴다는 것을 인지시킵니다.
+    */
+    .page-disclosure .disclosure-table {
+        font-size: 14px;
+        min-width: 600px; /* 테이블 최소 너비를 강제해 스크롤 생성 */
+    }
+    .page-disclosure .disclosure-table th,
+    .page-disclosure .disclosure-table td {
+        padding: 15px;
+    }
+    .page-disclosure .download-button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}

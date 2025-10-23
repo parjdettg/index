@@ -7,8 +7,8 @@
     <title>진주초원 사회적협동조합</title>
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 </head>
-<body>
-<header class="main-header">
+
+<body class="page-index"> <header class="main-header">
     <div class="nav-container">
         <a href="#index.html" class="logo">
             진주초원 사회적협동조합&nbsp;
@@ -16,7 +16,7 @@
         </a>
         <nav class="nav-menu">
             <a href="about.html">조합소개<span class="en-nav-text"></span></a>
-            <a href="#disclosure">정보공개</a>
+            <a href="disclosure.html">정보공개</a>
             <a href="#programs">주요사업</a>
             <a href="#gallery">활동기록</a>
             <a href="#contact">참여/신고</a>
@@ -25,6 +25,13 @@
 </header>
 
 <section id="home" class="hero-section">
+
+    <div class="slide-backgrounds">
+        <div class="slide-item active" style="background-image: url('../images/main.jpg');"></div>
+        <div class="slide-item" style="background-image: url('../images/main2.jpg');"></div>
+        <div class="slide-item" style="background-image: url('../images/main3.jpg');"></div>
+    </div>
+
     <div class="hero-content">
         <h1>진주초원 사회적협동조합</h1>
         <p class="en-sub-title">JINJU MEADOW SOCIAL COOPERATIVE</p>
@@ -45,48 +52,29 @@
     <div class="card-item" data-aos="fade-left">
         </div>
 </div>
-<section id="mandatory-links" class="partners-section">
-    <div class="container link-container" 
-     data-aos="fade-up" 
-        data-aos-duration="1000" 
-        data-aos-delay="300">
-        </div>
-</section>
-</section> 
-<section id="mandatory-links" class="partners-section">
+
+
+</section> <section id="mandatory-links" class="partners-section">
     <div class="container link-container">
 
         <a href="https://www.hometax.go.kr/" target="_blank" class="partner-item">
-            <img src="images/Tax.jpg" alt="국세청 로고">
-            
+            <img src="images/Tax.jpg" alt="국세청 로고" class="logo-nts">
         </a>
         
         <a href="https://www.acrc.go.kr/" target="_blank" class="partner-item">
-            <img src="images/cor.png" alt="국민권익위원회 로고">
-            
+           <img src ="images/cor1.png" alt="국민권익위원회 로고">
         </a>
 
         <a href="https://www.gyeongnam.go.kr/" target="_blank" class="partner-item">
             <img src="images/gyn.png" alt="경상남도청 로고">
-            
         </a>
         
-        </div>
+    </div>
 </section>
-  
-    </section>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init({
-        duration: 1000,
-        once: true,     
-    });
-</script>
-</body>
-</html>
 
-<footer>
-    <div class="container footer-info">
+
+
+<footer> <div class="container footer-info">
         <p>
             대표자 : 이기성 
             <span class="info-divider">|</span> 
@@ -101,3 +89,41 @@
         </p>
     </div>
 </footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true,     
+    });
+
+    /* --- ★ 여기부터 슬라이드 쇼 JS 코드 ★ --- */
+    (function() {
+        // 1. '.slide-item' 클래스를 가진 모든 요소를 찾습니다.
+        const slides = document.querySelectorAll('.slide-item');
+        let currentSlide = 0; // 현재 활성화된 슬라이드 번호 (0부터 시작)
+        const slideInterval = 5000; // 5초(5000ms)마다 변경
+
+        function nextSlide() {
+            // 2. 현재 슬라이드에서 'active' 클래스를 제거합니다.
+            slides[currentSlide].classList.remove('active');
+            
+            // 3. 다음 슬라이드 번호를 계산합니다. (마지막이면 0으로)
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // 4. 다음 슬라이드에 'active' 클래스를 추가합니다.
+            slides[currentSlide].classList.add('active');
+        }
+
+        // 5. 5초마다 nextSlide 함수를 자동으로 실행합니다.
+        setInterval(nextSlide, slideInterval);
+    })();
+    /* --- ★ 여기까지 슬라이드 쇼 JS 코드 ★ --- */
+
+</script>
+
+<footer>
+    </footer>
+
+</body> 
+</html>
