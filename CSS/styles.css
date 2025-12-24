@@ -757,20 +757,18 @@ footer {
     margin: 20px auto;
 }
 
-/* 조직도 흐름도 (박스/화살표) */
 .page-about .org-chart-flow {
-    display: flex; /* ★ 세로로 쌓인(스크린샷) 박스들을 가로로 정렬 */
-    flex-wrap: nowrap; /* 한 줄로 표시 (모바일 제외) */
+    display: flex; 
+    flex-wrap: nowrap; 
     justify-content: center; 
     align-items: center; 
-    gap: 15px; /* 박스와 화살표 사이 간격 */
+    gap: 15px; 
     margin: 0 auto 40px auto; 
     padding: 0 20px; 
 }
 
-/* 조직도 박스 */
 .page-about .org-node {
-    background-color: #f8f9fa; /* 연한 회색 배경 */
+    background-color: #f8f9fa; 
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px; 
@@ -788,26 +786,18 @@ footer {
 .page-about .org-node span {
     font-size: 14px;
     color: #555;
-    font-weight: 400; /* ★ ExtraBold 덮어쓰기 */
+    font-weight: 400; 
 }
 
 /* 화살표 */
 .page-about .org-arrow {
     font-size: 24px;
     font-weight: 700;
-    color: #3B7A57; /* 메인 컬러 */
+    color: #3B7A57; 
     flex-grow: 0;
     flex-shrink: 0;
 }
 
-/* =================================
-   8. 정보공개 (disclosure.html) 전용 스타일
-   ( .page-disclosure 클래스로 충돌 방지 )
-==================================== */
-
-/* --- 8-1. 공통 스타일 --- */
-
-/* about.html의 헤더와 동일한 스타일 적용 */
 .page-disclosure .main-header {
     position: relative; 
     background-color: white; 
@@ -827,13 +817,11 @@ footer {
     color: #3B7A57; 
 }
 
-/* 페이지 전체 섹션 */
 .page-disclosure .disclosure-section {
     background-color: #ffffff; /* 흰색 배경 */
     padding: 80px 0;
 }
 
-/* 페이지 제목 영역 */
 .page-disclosure .disclosure-title-area {
     text-align: center;
     margin-bottom: 50px;
@@ -852,14 +840,11 @@ footer {
     font-size: 18px;
     color: #555;
     margin: 0;
-    font-weight: 400; /* 일반 굵기 */
+    font-weight: 400;
 }
-
-/* --- 8-2. 테이블 스타일 --- */
 
 .page-disclosure .disclosure-table-wrapper {
     width: 100%;
-    /* 테이블이 길어질 경우 좌우 스크롤이 생기도록 */
     overflow-x: auto; 
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -868,13 +853,12 @@ footer {
 
 .page-disclosure .disclosure-table {
     width: 100%;
-    border-collapse: collapse; /* 테두리 한 줄로 합치기 */
+    border-collapse: collapse; 
     text-align: left;
 }
 
-/* 테이블 헤더 (thead) */
 .page-disclosure .disclosure-table th {
-    background-color: #f9f9f9; /* 연한 회색 배경 */
+    background-color: #f9f9f9; 
     padding: 18px 20px;
     font-size: 16px;
     font-weight: 600;
@@ -882,22 +866,19 @@ footer {
     border-bottom: 2px solid #ddd;
 }
 
-/* 테이블 본문 (tbody) */
 .page-disclosure .disclosure-table td {
     padding: 20px 20px;
     font-size: 16px;
     color: #444;
     border-bottom: 1px solid #eee;
-    font-weight: 400; /* 일반 굵기 */
-    vertical-align: middle; /* 내용 세로 중앙 정렬 */
+    font-weight: 400; 
+    vertical-align: middle; 
 }
 
-/* 마지막 줄만 하단 테두리 제거 */
 .page-disclosure .disclosure-table tr:last-child td {
     border-bottom: none;
 }
 
-/* 각 열(column) 너비 조정 */
 .page-disclosure .col-year { width: 15%; }
 .page-disclosure .col-title { width: 40%; }
 .page-disclosure .col-donation { width: 20%; }
@@ -905,13 +886,12 @@ footer {
 
 .page-disclosure .td-year strong {
     font-weight: 700;
-    color: #3B7A57; /* 메인 컬러 */
+    color: #3B7A57; 
 }
 
-/* --- 8-3. 다운로드 버튼 스타일 --- */
 .page-disclosure .download-button {
     display: inline-block;
-    background-color: #3B7A57; /* 메인 컬러 */
+    background-color: #3B7A57; 
     color: white;
     text-decoration: none;
     padding: 10px 20px;
@@ -922,23 +902,19 @@ footer {
 }
 
 .page-disclosure .download-button:hover {
-    background-color: #2c5a41; /* 살짝 어둡게 */
+    background-color: #2c5a41; 
 }
 
-/* --- 8-4. 정보공개 모바일 반응형 --- */
 @media (max-width: 768px) {
-    /* (헤더는 about.html과 공통 스타일 사용) */
+    
 
     .page-disclosure .disclosure-title {
         font-size: 30px;
     }
 
-    /* 모바일에선 테이블의 글꼴을 살짝 줄이고,
-      가로 스크롤이 생긴다는 것을 인지시킵니다.
-    */
     .page-disclosure .disclosure-table {
         font-size: 14px;
-        min-width: 600px; /* 테이블 최소 너비를 강제해 스크롤 생성 */
+        min-width: 600px; 
     }
     .page-disclosure .disclosure-table th,
     .page-disclosure .disclosure-table td {
@@ -950,52 +926,46 @@ footer {
     }
 }
 
-/* --- ★ 카드 섹션 디자인 (수정 버전) ★ --- */
-
-/* 카드 전체를 감싸는 틀 */
 .card-grid {
     display: flex;
     justify-content: center;
     gap: 20px;
-    padding: 0 20px; /* 좌우 여백 */
+    padding: 0 20px; 
     max-width: 1200px;
-    margin: 0 auto; /* 가로 중앙 정렬 */
+    margin: 0 auto; 
     
-    /* 위치 조정: 배경 이미지 아래로 살짝 겹치게 배치 */
+    
     margin-top: -80px; 
     margin-bottom: 80px;
     position: relative;
-    z-index: 10; /* 배경보다 무조건 위에 오도록 설정 */
+    z-index: 10; 
 }
 
-/* 개별 카드 디자인 */
 .card-item {
-    background-color: #ffffff; /* ★중요: 완전한 흰색 배경 */
+    background-color: #ffffff; 
     flex: 1;
     min-width: 280px;
     padding: 40px 30px;
-    border-radius: 15px; /* 모서리 둥글게 */
+    border-radius: 15px; 
     
-    /* 그림자: 카드가 떠있는 느낌을 줘서 가독성을 높임 */
+    
     box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-    border: 1px solid #f0f0f0; /* 아주 연한 테두리 */
+    border: 1px solid #f0f0f0; 
     
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 마우스 올렸을 때 효과 */
 .card-item:hover {
-    transform: translateY(-10px); /* 위로 쑥 올라옴 */
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* 그림자 진해짐 */
+    transform: translateY(-10px); 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
     border-color: #e0e0e0;
 }
 
-/* 아이콘 */
 .card-icon {
     font-size: 40px;
     margin-bottom: 20px;
-    background: #f8f9fa; /* 아이콘 뒤에 연한 회색 원 */
+    background: #f8f9fa; 
     width: 80px;
     height: 80px;
     line-height: 80px;
@@ -1004,24 +974,21 @@ footer {
     margin-right: auto;
 }
 
-/* 제목 */
 .card-item h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
-    color: #2c3e50; /* 진한 남색 */
+    color: #2c3e50; 
     font-weight: 700;
 }
 
-/* 설명글 */
 .card-item p {
     font-size: 1rem;
-    color: #555; /* 진한 회색 (가독성 확보) */
+    color: #555; 
     line-height: 1.6;
     margin-bottom: 25px;
-    word-break: keep-all; /* 단어 중간에 줄바꿈 방지 */
+    word-break: keep-all; 
 }
 
-/* 링크 */
 .card-link {
     display: inline-block;
     padding: 10px 20px;
@@ -1034,13 +1001,12 @@ footer {
 }
 
 .card-link:hover {
-    background-color: #e67e22; /* 오렌지색 포인트 */
+    background-color: #e67e22; 
 }
 
-/* 모바일 화면 대응 (화면이 좁을 때) */
 @media (max-width: 768px) {
     .card-grid {
-        flex-direction: column; /* 세로로 쌓기 */
-        margin-top: 30px; /* 모바일에서는 겹치지 않게 */
+        flex-direction: column; 
+        margin-top: 30px; 
     }
 }
