@@ -949,3 +949,71 @@ footer {
         font-size: 13px;
     }
 }
+
+/* --- ★ 카드 섹션 디자인 추가 ★ --- */
+
+/* 카드 전체를 감싸는 틀 (3개를 가로로 배치) */
+.card-grid {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    gap: 30px; /* 카드 사이 간격 */
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* 화면 가운데 위치 */
+    flex-wrap: wrap; /* 화면이 좁으면 줄바꿈 */
+    position: relative;
+    z-index: 2; /* 배경보다 위에 뜨도록 */
+    margin-top: -50px; /* 히어로 섹션 위로 살짝 겹치게 하여 세련된 느낌 줌 */
+}
+
+/* 개별 카드 디자인 */
+.card-item {
+    background: white;
+    flex: 1; /* 너비 균등 분배 */
+    min-width: 280px; /* 너무 작아지지 않게 */
+    padding: 40px 30px;
+    border-radius: 15px; /* 모서리 둥글게 */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* 그림자 효과 */
+    text-align: center;
+    transition: transform 0.3s ease; /* 움직임 부드럽게 */
+}
+
+/* 마우스를 올렸을 때 효과 */
+.card-item:hover {
+    transform: translateY(-10px); /* 위로 살짝 떠오름 */
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15); /* 그림자 진해짐 */
+}
+
+/* 아이콘 (이모지) 크기 */
+.card-icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+/* 카드 제목 */
+.card-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* 카드 본문 */
+.card-item p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* 자세히 보기 링크 */
+.card-link {
+    text-decoration: none;
+    color: #2c3e50; /* 진한 남색 (조합 컬러에 맞춰 변경 가능) */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.card-link:hover {
+    color: #e67e22; /* 마우스 올리면 주황색으로 변경 */
+}
