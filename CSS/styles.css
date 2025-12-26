@@ -1,6 +1,6 @@
 /* ==========================================================================
-   진주초원 사회적협동조합 공식 스타일시트 (Unified & Optimized)
-   Last Update: 2025-12-26
+   진주초원 사회적협동조합 공식 스타일시트 (Slim & Compact Ver.)
+   Last Update: 2025-12-27 (사이즈 축소 패치)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -13,33 +13,34 @@ body, html {
     background-color: #f8f8f8;
     box-sizing: border-box;
     color: #333;
-    line-height: 1.6;
+    line-height: 1.5; /* 줄 간격도 살짝 줄임 */
+    overflow-x: hidden; /* ★ 중요: 가로 스크롤(화면 잘림) 방지 */
 }
 
 *, *:before, *:after {
     box-sizing: inherit;
 }
 
-/* 공통 컨테이너 */
+/* 공통 컨테이너 (폭을 1100px -> 1000px로 줄여서 한눈에 들어오게 함) */
 .container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1000px; /* ★ 수정: 폭 축소 */
     margin: 0 auto;
     padding: 0 20px;
 }
 
 /* --------------------------------------------------------------------------
-   2. 헤더 (Header) - 공통 및 페이지별 테마
+   2. 헤더 (Header)
    -------------------------------------------------------------------------- */
 .main-header {
     width: 100%;
     z-index: 1000;
-    padding: 15px 0;
+    padding: 10px 0; /* ★ 수정: 헤더 높이 줄임 */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1000px; /* ★ 수정: 헤더 폭도 맞춤 */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -48,7 +49,7 @@ body, html {
 }
 
 .logo {
-    font-size: 20px;
+    font-size: 18px; /* ★ 수정: 글자 크기 줄임 */
     font-weight: 800;
     text-decoration: none;
     line-height: 1.2;
@@ -56,26 +57,26 @@ body, html {
 
 .en-logo-text {
     display: block;
-    font-size: 10px;
+    font-size: 9px; /* ★ 수정 */
     font-weight: 400;
     letter-spacing: 0.5px;
 }
 
 .nav-menu {
     display: flex;
-    gap: 30px;
+    gap: 20px; /* ★ 수정: 메뉴 간격 좁힘 */
 }
 
 .nav-menu a {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px; /* ★ 수정: 메뉴 글자 크기 줄임 */
     font-weight: 500;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 5px;
     transition: all 0.3s ease;
 }
 
-/* [테마 A] 메인 페이지용 (투명 배경 + 흰 글씨) */
+/* [테마 A] 메인 페이지용 */
 .page-index .main-header {
     position: absolute;
     top: 0; left: 0;
@@ -88,8 +89,7 @@ body, html {
 .page-index .en-logo-text { color: rgba(255, 255, 255, 0.9); text-shadow: none; }
 .page-index .nav-menu a:hover { background-color: rgba(255, 255, 255, 0.15); }
 
-/* [테마 B] 서브 페이지용 (흰 배경 + 검은 글씨) */
-/* (about, disclosure, business, gallery 등 모든 서브 페이지 공통 적용) */
+/* [테마 B] 서브 페이지용 */
 .main-header:not(.page-index .main-header) {
     position: relative;
     background-color: white;
@@ -103,7 +103,7 @@ body, html {
 .main-header:not(.page-index .main-header) .en-logo-text { color: #777; }
 .main-header:not(.page-index .main-header) .nav-menu a:hover {
     background-color: #f4f4f4;
-    color: #2c5f2d; /* 진녹색 포인트 */
+    color: #2c5f2d;
 }
 
 /* --------------------------------------------------------------------------
@@ -138,7 +138,6 @@ body, html {
 
 .slide-item.active { opacity: 1; z-index: 2; }
 
-/* 어두운 덮개 (글자 잘 보이게) */
 .hero-section::before {
     content: '';
     position: absolute;
@@ -151,17 +150,19 @@ body, html {
     position: relative;
     z-index: 4;
     padding: 20px;
+    max-width: 800px; /* ★ 수정: 글자가 너무 퍼지지 않게 제한 */
+    margin: 0 auto;
 }
 
 .hero-content h1 {
-    font-size: 52px;
+    font-size: 42px; /* ★ 수정: 제목 크기 줄임 (52 -> 42) */
     font-weight: 800;
     margin: 0 0 15px 0;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
-    font-size: 22px;
+    font-size: 18px; /* ★ 수정: 본문 크기 줄임 (22 -> 18) */
     margin-bottom: 30px;
 }
 
@@ -170,10 +171,10 @@ body, html {
     background-color: #2c5f2d;
     color: white;
     text-decoration: none;
-    padding: 14px 35px;
+    padding: 12px 30px; /* ★ 수정: 버튼 크기 줄임 */
     border-radius: 5px;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 16px;
     transition: all 0.3s;
 }
 .cta-button:hover {
@@ -182,17 +183,15 @@ body, html {
 }
 
 /* --------------------------------------------------------------------------
-   4. 메인 화면 (Index) - 카드 섹션 (모던 스타일)
+   4. 메인 화면 (Index) - 카드 섹션
    -------------------------------------------------------------------------- */
-/* 주의: About 페이지의 카드와 겹치지 않게 .page-index로 한정하거나 별도 클래스 사용 */
-
 .page-index .card-grid {
     display: flex;
     justify-content: center;
-    gap: 25px;
+    gap: 20px; /* ★ 수정: 간격 줄임 */
     padding: 0 20px;
-    max-width: 1140px;
-    margin: -100px auto 100px auto; /* Hero 섹션 위로 살짝 올라오게 */
+    max-width: 1000px; /* ★ 수정 */
+    margin: -80px auto 80px auto; /* ★ 수정: 겹치는 높이 줄임 */
     position: relative;
     z-index: 10;
 }
@@ -200,60 +199,78 @@ body, html {
 .page-index .card-item {
     background-color: #ffffff;
     flex: 1;
-    min-width: 280px;
-    padding: 50px 30px;
+    min-width: 250px;
+    padding: 30px 20px; /* ★ 수정: 패딩 대폭 축소 (50 -> 30) */
     border-radius: 8px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     border-bottom: 3px solid transparent;
     text-align: left;
     transition: all 0.3s ease;
 }
 
 .page-index .card-item:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
     border-bottom-color: #2c5f2d;
 }
 
 .icon-box {
-    width: 60px; height: 60px;
-    margin-bottom: 25px;
+    width: 50px; height: 50px; /* ★ 수정: 아이콘 크기 줄임 */
+    margin-bottom: 20px;
     color: #2c5f2d;
 }
 
 .page-index .card-item h3 {
-    font-size: 1.35rem;
-    margin-bottom: 15px;
+    font-size: 1.2rem; /* ★ 수정: 제목 줄임 */
+    margin-bottom: 10px;
     color: #111;
     font-weight: 700;
 }
 
+.page-index .card-item p {
+    font-size: 0.95rem; /* ★ 수정: 본문 줄임 */
+    color: #666;
+    margin-bottom: 20px;
+}
+
 .read-more {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #2c5f2d;
     text-decoration: none;
 }
 
 /* --------------------------------------------------------------------------
-   5. 조합소개 (About) - 인사말, 미션, 조직도
+   5. 조합소개 (About) - ★ 여기가 제일 중요 (잘림 해결) ★
    -------------------------------------------------------------------------- */
 .page-about .greeting-section {
-    padding: 80px 0;
+    padding: 50px 0; /* ★ 수정: 상하 여백 대폭 축소 (80 -> 50) */
     background-color: #f9f9f9;
+}
+
+.page-about .section-title {
+    font-size: 28px; /* ★ 수정: 제목 크기 줄임 */
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .page-about .greeting-box {
     display: flex;
-    gap: 40px;
+    gap: 30px; /* ★ 수정: 간격 줄임 */
     background-color: white;
-    padding: 40px;
+    padding: 30px; /* ★ 수정: 박스 안쪽 여백 줄임 (40 -> 30) */
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    /* ★ 중요: 내용이 넘치지 않도록 설정 */
+    align-items: flex-start; 
+}
+
+.page-about .greeting-photo {
+    flex-shrink: 0; /* 사진이 찌그러지지 않게 */
 }
 
 .page-about .greeting-photo img {
-    width: 200px; height: 200px;
+    width: 180px; height: 180px; /* ★ 수정: 사진 크기 줄임 (200 -> 180) */
     object-fit: cover;
     border-radius: 10px;
     border: 5px solid transparent;
@@ -261,272 +278,139 @@ body, html {
     border-image-slice: 1;
 }
 
-/* 미션 섹션 (그라데이션 배경) */
-.page-about .mission-section {
-    background: linear-gradient(to bottom, #eaf2eb, #ffffff);
-    padding: 80px 0;
+.page-about .greeting-text {
+    flex: 1; /* ★ 중요: 남은 공간을 글자가 차지 (잘림 방지) */
+    min-width: 0; /* ★ 중요: Flexbox에서 글자가 뚫고 나가는 현상 방지 */
 }
 
-/* About 페이지 전용 카드 그리드 (Index 페이지와 다름!) */
+.page-about .greeting-text .greeting-title {
+    font-size: 24px; /* ★ 수정: 인사말 제목 줄임 */
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3B7A57;
+    padding-bottom: 10px;
+}
+
+.page-about .greeting-text p {
+    font-size: 16px; /* ★ 수정: 본문 줄임 */
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+/* 미션 섹션 */
+.page-about .mission-section {
+    background: linear-gradient(to bottom, #eaf2eb, #ffffff);
+    padding: 50px 0; /* ★ 수정: 여백 줄임 */
+}
+
 .page-about .card-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 20px;
     max-width: 1000px;
     margin: 30px auto 0;
 }
 
 .page-about .card-item {
     background: white;
-    padding: 30px;
+    padding: 20px; /* ★ 수정: 패딩 줄임 */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border-top: 5px solid #ccc; /* 기본 색상 */
+    border-top: 5px solid #ccc;
     transition: transform 0.3s;
 }
 
-.page-about .card-item:hover { transform: translateY(-5px); }
+.page-about .card-item h4 {
+    font-size: 18px; /* ★ 수정: 제목 줄임 */
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
 
-/* 색상별 포인트 */
-.page-about .card-item[data-color="blue"] { border-top-color: #007bff; }
-.page-about .card-item[data-color="blue"] .mission-number { color: #007bff; }
-
-.page-about .card-item[data-color="red"] { border-top-color: #ff6347; }
-.page-about .card-item[data-color="red"] .mission-number { color: #ff6347; }
-
-.page-about .card-item[data-color="green"] { border-top-color: #2c5f2d; }
-.page-about .card-item[data-color="green"] .mission-number { color: #2c5f2d; }
-
-.mission-number { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
+.page-about .card-item p { font-size: 14px; } /* ★ 수정 */
+.mission-number { font-size: 30px; font-weight: 900; margin-bottom: 5px; } /* ★ 수정 */
 
 /* 조직도 */
+.page-about .org-chart-title-area { margin-top: 60px; margin-bottom: 20px; }
+.page-about .org-chart-title { font-size: 26px; }
+
 .page-about .org-chart-flow {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 10px; /* ★ 수정 */
     flex-wrap: wrap;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .org-node {
     background: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 15px 20px;
+    padding: 10px 15px; /* ★ 수정 */
     text-align: center;
+    font-size: 14px; /* ★ 수정 */
 }
+
+.org-node strong { font-size: 16px; display: block; }
 
 /* --------------------------------------------------------------------------
-   6. 정보공개 (Disclosure) - 테이블 디자인
+   6. 정보공개, 활동기록, 주요사업 (공통)
    -------------------------------------------------------------------------- */
-.page-disclosure .disclosure-section { padding: 80px 0; }
-
-.disclosure-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+.page-disclosure .disclosure-section,
+.activity-section, .business-section { 
+    padding: 50px 0; /* ★ 수정: 여백 줄임 */
 }
 
-.disclosure-table th {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-bottom: 2px solid #ddd;
-    color: #333;
+.disclosure-table th, .disclosure-table td {
+    padding: 12px; /* ★ 수정 */
+    font-size: 0.9rem;
 }
 
-.disclosure-table td {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    color: #555;
-}
+.section-title h2 { font-size: 1.8rem; }
+.section-title { margin-bottom: 40px; }
 
-.download-button {
-    background-color: #2c5f2d;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-/* --------------------------------------------------------------------------
-   7. ★ 활동기록/주요사업 (Gallery & Business) - 쇼케이스 스타일 ★
-   (새로 추가된 핵심 디자인)
-   -------------------------------------------------------------------------- */
-.activity-section, .business-section {
-    padding: 80px 20px;
-    background-color: #f8f9fa; /* 연한 회색 배경 */
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 60px;
-}
-.section-title h2 {
-    font-size: 2rem;
-    color: #2c5f2d;
-    font-weight: 700;
-    margin-bottom: 10px;
-}
-
-/* 리스트 컨테이너 */
-.project-list {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-}
-
-/* 개별 카드 (가로형) */
+/* 쇼케이스 카드 */
 .project-card {
-    display: flex;
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #eee;
+    border-radius: 10px;
 }
-
-.project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-
-/* 왼쪽 이미지 */
 .project-img {
-    flex: 0 0 40%;
-    position: relative;
-    min-height: 280px;
+    flex: 0 0 35%; /* 사진 비율 줄임 */
+    min-height: 220px; /* 높이 줄임 */
 }
-.project-img img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-}
-
-/* 상태 뱃지 */
-.status-badge {
-    position: absolute;
-    top: 20px; left: 20px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.status-badge.ing { background-color: #2c5f2d; }
-.status-badge.done { background-color: #7f8c8d; }
-
-/* 오른쪽 정보 */
 .project-info {
-    flex: 1;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding: 25px; /* 패딩 줄임 */
 }
-
-.project-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.project-meta {
-    margin-bottom: 20px;
-    color: #666;
-    font-size: 0.95rem;
-    display: flex;
-    gap: 15px;
-}
-.project-meta strong { color: #2c5f2d; }
-
-.project-desc {
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    word-break: keep-all;
-}
-
-.project-tags {
-    display: flex; gap: 10px; flex-wrap: wrap;
-}
-.project-tags span {
-    background-color: #f0f4f0;
-    color: #2c5f2d;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
+.project-title { font-size: 1.3rem; margin-bottom: 10px; }
+.project-desc { font-size: 0.95rem; margin-bottom: 15px; }
 
 /* --------------------------------------------------------------------------
-   8. 파트너 로고 및 푸터
+   7. 파트너 로고 및 푸터
    -------------------------------------------------------------------------- */
-.partners-section {
-    padding: 40px 0;
-    border-top: 1px solid #eee;
-    background: white;
-}
-.link-container {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-.partner-item img {
-    height: 50px;
-    filter: grayscale(100%);
-    opacity: 0.6;
-    transition: all 0.3s;
-}
-.partner-item:hover img { filter: grayscale(0); opacity: 1; }
+.partners-section { padding: 30px 0; border-top: 1px solid #eee; background: white; }
+.link-container { gap: 30px; }
+.partner-item img { height: 40px; } /* 로고 크기 줄임 */
 
-footer {
-    background-color: #f4f4f4;
-    padding: 50px 0;
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
-}
-.footer-info p { margin: 5px 0; color: #666; font-size: 0.9rem; }
-.copyright { margin-top: 20px; color: #999; font-size: 0.8rem; }
+footer { padding: 30px 0; }
+.footer-info p { font-size: 0.85rem; }
 
 /* --------------------------------------------------------------------------
-   9. 모바일 반응형 (Mobile Responsive)
+   8. 모바일 반응형 (안전 장치)
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
-    /* 네비게이션 */
-    .nav-container { flex-direction: column; padding: 15px; }
-    .nav-menu { flex-direction: column; width: 100%; margin-top: 15px; gap: 0; }
-    .nav-menu a {
-        text-align: center;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-        padding: 12px;
-    }
-    .page-index .nav-menu a { border-bottom: 1px solid rgba(255,255,255,0.2); }
-
-    /* Hero */
-    .hero-content h1 { font-size: 32px; }
-    .hero-content p { font-size: 18px; }
-
-    /* Index 카드 */
-    .page-index .card-grid { flex-direction: column; margin-top: 30px; }
+    .nav-container { flex-direction: column; padding: 10px; }
+    .nav-menu { flex-direction: column; width: 100%; margin-top: 10px; gap: 0; }
     
-    /* About */
+    .hero-content h1 { font-size: 28px; }
+    .hero-content p { font-size: 16px; }
+
+    .page-index .card-grid { flex-direction: column; margin-top: 20px; }
+    
     .page-about .greeting-box { flex-direction: column; }
+    .page-about .greeting-photo img { width: 100%; height: auto; margin-bottom: 20px; }
     .page-about .card-grid { grid-template-columns: 1fr; }
     
-    /* Disclosure */
-    .disclosure-table th, .disclosure-table td { padding: 10px; font-size: 0.85rem; }
-    
-    /* Gallery & Business (Showcase) */
     .project-card { flex-direction: column; }
-    .project-img { height: 220px; min-height: auto; }
-    .project-info { padding: 25px; }
+    .project-img { height: 180px; }
 }
