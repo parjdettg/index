@@ -1062,8 +1062,9 @@ footer {
     /* 최소 300px 크기는 유지하되, 공간이 남으면 꽉 채움 */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 15px; /* 사진 사이 간격 */
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
+    padding: 0 40px;
 }
 
 /* 개별 사진 박스 */
