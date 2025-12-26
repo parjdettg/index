@@ -1030,3 +1030,102 @@ footer {
         justify-content: center;
     }
 }
+
+/* --- ★ 활동기록(Gallery) 디자인 ★ --- */
+
+.gallery-section {
+    padding: 80px 20px;
+    background-color: #f9f9f9; /* 배경은 아주 연한 회색 */
+}
+
+/* 섹션 제목 스타일 */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2rem;
+    color: #2c5f2d; /* 진녹색 (브랜드 컬러) */
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.section-title p {
+    color: #666;
+}
+
+/* 그리드 레이아웃 설정 (핵심!) */
+.photo-grid {
+    display: grid;
+    /* 화면 크기에 따라 자동으로 열 개수 조절 (반응형) */
+    /* 최소 300px 크기는 유지하되, 공간이 남으면 꽉 채움 */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px; /* 사진 사이 간격 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 개별 사진 박스 */
+.photo-item {
+    position: relative; /* 글자를 사진 위에 얹기 위한 기준점 */
+    overflow: hidden; /* 사진이 박스 밖으로 삐져나오지 않게 */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    aspect-ratio: 1 / 1; /* 정사각형 비율 강제 유지 (인스타 감성) */
+    cursor: pointer;
+}
+
+/* 이미지 스타일 */
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 비율 깨지지 않고 꽉 차게 */
+    transition: transform 0.5s ease; /* 줌인 효과 부드럽게 */
+}
+
+/* 마우스 올렸을 때(Hover) 덮개 효과 */
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 반투명 검은색 배경 */
+    color: white;
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    opacity: 0; /* 평소에는 투명해서 안 보임 */
+    transition: opacity 0.3s ease;
+}
+
+.photo-overlay .text {
+    text-align: center;
+    transform: translateY(20px); /* 글자가 살짝 아래 있다가 */
+    transition: transform 0.3s ease;
+}
+
+/* 마우스 올렸을 때 동작 */
+.photo-item:hover img {
+    transform: scale(1.1); /* 사진이 살짝 확대됨 */
+}
+
+.photo-item:hover .photo-overlay {
+    opacity: 1; /* 검은 배경이 나타남 */
+}
+
+.photo-item:hover .text {
+    transform: translateY(0); /* 글자가 제자리로 올라옴 */
+}
+
+.photo-overlay h3 {
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.photo-overlay p {
+    font-size: 1rem;
+    color: #ddd;
+}
