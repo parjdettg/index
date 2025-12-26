@@ -414,3 +414,16 @@ footer { padding: 30px 0; }
     .project-card { flex-direction: column; }
     .project-img { height: 180px; }
 }
+
+/* ==========================================================================
+   ★ [[긴급 수정]] 서명 이미지 크기 조절 패치 (2025-12-27) ★
+   ========================================================================== */
+.page-about .signature-area .signature-img {
+    max-width: 150px; /* 너비를 150px로 제한 (기존보다 더 아담하게) */
+    height: auto;     /* 높이는 알아서 비율에 맞게 조절 */
+    margin-bottom: 5px; /* 서명과 이름 사이 간격 조절 */
+}
+
+.page-about .signature-area .signature-line {
+    font-size: 16px; /* 이름 글자 크기도 살짝 줄여서 균형 맞춤 */
+}
