@@ -1072,7 +1072,7 @@ footer {
     overflow: hidden; /* 사진이 박스 밖으로 삐져나오지 않게 */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    aspect-ratio: 1 / 1; /* 정사각형 비율 강제 유지 (인스타 감성) */
+    aspect-ratio: 4 / 3; /* 정사각형 비율 강제 유지 (인스타 감성) */
     cursor: pointer;
 }
 
