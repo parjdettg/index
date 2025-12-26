@@ -21,10 +21,10 @@ body, html {
     box-sizing: inherit;
 }
 
-/* 공통 컨테이너 (폭을 1100px -> 1000px로 줄여서 한눈에 들어오게 함) */
+/* 공통 컨테이너  */
 .container {
     width: 100%;
-    max-width: 1000px; /* ★ 수정: 폭 축소 */
+    max-width: 1300px; /* ★ 수정: 폭 축소 */
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -40,7 +40,7 @@ body, html {
 }
 
 .nav-container {
-    max-width: 1000px; /* ★ 수정: 헤더 폭도 맞춤 */
+    max-width: 1300px; /* ★ 수정: 헤더 폭도 맞춤 */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -190,7 +190,7 @@ body, html {
     justify-content: center;
     gap: 20px; /* ★ 수정: 간격 줄임 */
     padding: 0 20px;
-    max-width: 1000px; /* ★ 수정 */
+    max-width: 1300px; /* ★ 수정 */
     margin: -80px auto 80px auto; /* ★ 수정: 겹치는 높이 줄임 */
     position: relative;
     z-index: 10;
@@ -371,48 +371,202 @@ body, html {
 .section-title h2 { font-size: 1.8rem; }
 .section-title { margin-bottom: 40px; }
 
-/* 쇼케이스 카드 */
+/* ==========================================================================
+   ★ [[긴급 수정]] 활동기록 카드 및 이미지 완벽 통제 ★
+   ========================================================================== */
+
+/* 1. 카드 전체 틀 (가로 배치 고정) */
 .project-card {
-    border-radius: 10px;
+    display: flex;             /* 좌우로 나란히 배치 */
+    background: white;
+    border-radius: 15px;       /* 모서리 둥글게 */
+    overflow: hidden;          /* 튀어나가는 이미지 잘라내기 (중요!) */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    margin-bottom: 40px;       /* 카드끼리 간격 */
+    height: 320px;             /* ★ 높이를 강제로 고정 (들쭉날쭉 방지) */
 }
+
+/* 2. 왼쪽 사진 영역 (40% 차지) */
 .project-img {
-    flex: 0 0 35%; /* 사진 비율 줄임 */
-    min-height: 220px; /* 높이 줄임 */
+    flex: 0 0 40%;             /* 너비 40%로 고정 */
+    max-width: 40% !important; /* 혹시 몰라 한 번 더 잠금 */
+    position: relative;
+    overflow: hidden;          /* 영역 넘치면 숨김 */
 }
+
+/* 3. 이미지 자체 스타일 (핵심!) */
+.project-img img {
+    width: 100%;               /* 부모(40%) 너비에 꽉 차게 */
+    height: 100%;              /* 높이도 꽉 차게 */
+    object-fit: cover;         /* ★ 사진 비율 유지하면서 빈틈없이 채우기 (찌그러짐 방지) */
+    display: block;            /* 하단 미세한 여백 제거 */
+}
+
+/* 4. 오른쪽 설명 영역 (나머지 60% 차지) */
 .project-info {
-    padding: 25px; /* 패딩 줄임 */
+    flex: 1;                   /* 남은 공간 다 씀 */
+    padding: 30px 40px;        /* 안쪽 여백 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 내용 수직 중앙 정렬 */
 }
-.project-title { font-size: 1.3rem; margin-bottom: 10px; }
-.project-desc { font-size: 0.95rem; margin-bottom: 15px; }
 
-/* --------------------------------------------------------------------------
-   7. 파트너 로고 및 푸터
-   -------------------------------------------------------------------------- */
-.partners-section { padding: 30px 0; border-top: 1px solid #eee; background: white; }
-.link-container { gap: 30px; }
-.partner-item img { height: 40px; } /* 로고 크기 줄임 */
+/* 5. 뱃지 (진행중/완료) */
+.status-badge {
+    position: absolute;
+    top: 20px; left: 20px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 10;               /* 사진보다 위에 뜨도록 */
+}
+.status-badge.ing { background-color: #2c5f2d; }
+.status-badge.done { background-color: #7f8c8d; }
 
-footer { padding: 30px 0; }
-.footer-info p { font-size: 0.85rem; }
+/* ==========================================================================
+   ★ 파트너(관련기관) 로고 섹션 디자인 수정본 ★
+   ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   8. 모바일 반응형 (안전 장치)
-   -------------------------------------------------------------------------- */
+/* 1. 배경을 깨끗한 흰색으로 깔아줍니다 */
+.partners-section {
+    background-color: #ffffff; 
+    padding: 40px 0; /* 위아래 여백 넉넉하게 */
+    border-top: 1px solid #eee; /* 위쪽 구분선 */
+    border-bottom: 1px solid #eee; /* 아래쪽 구분선 */
+}
+
+/* 2. 로고들을 가로로 나란히 정렬 */
+.link-container {
+    display: flex; 
+    justify-content: center; /* 화면 중앙 정렬 */
+    align-items: center; /* 세로 높이 중앙 정렬 */
+    gap: 240px; /* 로고 사이 간격을 넓혀서 답답하지 않게 */
+    flex-wrap: wrap; /* 화면이 좁으면 자동 줄바꿈 */
+}
+
+/* 모바일 화면 대응 */
 @media (max-width: 768px) {
-    .nav-container { flex-direction: column; padding: 10px; }
-    .nav-menu { flex-direction: column; width: 100%; margin-top: 10px; gap: 0; }
-    
-    .hero-content h1 { font-size: 28px; }
-    .hero-content p { font-size: 16px; }
+    .link-container {
+        gap: 40px; /* ★ 모바일에서는 좁게 유지 (120px은 너무 넓으니까요) */
+    }
+    .partner-item img {
+        height: 40px; /* 로고 크기도 작게 */
+    }
+}
 
-    .page-index .card-grid { flex-direction: column; margin-top: 20px; }
+.partner-item {
+    display: block;
+    text-decoration: none;
+    /* 링크에 마우스 올렸을 때의 영역 확보 */
+}
+
+/* 3. 이미지 크기 강제 통일 (가장 중요!) */
+.partner-item img {
+    height: 55px; /* ★ 높이를 55px로 고정 (키 맞추기) */
+    width: auto; /* 너비는 알아서 비율에 맞게 */
+    object-fit: contain; /* 이미지가 찌그러지지 않게 */
     
+    /* 평소엔 약간 회색빛으로 얌전하게 */
+    filter: grayscale(100%); 
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+/* 마우스 올렸을 때: 원래 색깔 나오면서 커짐 */
+.partner-item:hover img {
+    filter: grayscale(0%); /* 컬러 복구 */
+    opacity: 1.0; /* 선명하게 */
+    transform: scale(1.1); /* 1.1배 확대 */
+}
+
+/* ★ 국세청 로고(Tax.jpg)가 너무 크면 이것만 따로 조절 */
+.partner-item img.logo-nts {
+    height: 45px; /* 국세청만 살짝 줄임 (다른 로고와 밸런스 맞춤) */
+}
+
+/* 모바일 화면 대응 */
+@media (max-width: 768px) {
+    .link-container {
+        gap: 30px; /* 간격 좁힘 */
+    }
+    .partner-item img {
+        height: 40px; /* 모바일에서는 로고 크기 축소 */
+    }
+}
+
+/* --------------------------------------------------------------------------
+   8. 모바일 반응형 (안전 장치 - 1100px 기준)
+   -------------------------------------------------------------------------- */
+/* ★ 기준점을 768px -> 1100px로 변경하여 더 넓은 범위에서 안전하게 보호 */
+@media (max-width: 1100px) {
+    
+    /* 1. 네비게이션 메뉴 (세로 정렬) */
+    .nav-container { 
+        flex-direction: column; 
+        padding: 15px; 
+    }
+    .nav-menu { 
+        flex-direction: column; 
+        width: 100%; 
+        margin-top: 15px; 
+        gap: 0; 
+    }
+    .nav-menu a {
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 12px;
+        width: 100%;
+    }
+
+    /* 2. 메인 화면 글자 크기 축소 */
+    .hero-content h1 { font-size: 32px; }
+    .hero-content p { font-size: 18px; }
+    .hero-content .en-sub-title { 
+        font-size: 16px !important; 
+        letter-spacing: 1px !important; 
+    }
+
+    /* 3. 메인 카드 그리드 (세로 쌓기) */
+    .page-index .card-grid { 
+        flex-direction: column; 
+        margin-top: 30px; 
+    }
+    
+    /* 4. 조합소개 (About) 정리 */
     .page-about .greeting-box { flex-direction: column; }
     .page-about .greeting-photo img { width: 100%; height: auto; margin-bottom: 20px; }
-    .page-about .card-grid { grid-template-columns: 1fr; }
+    .page-about .card-grid { grid-template-columns: 1fr; } /* 1열로 변경 */
     
-    .project-card { flex-direction: column; }
-    .project-img { height: 180px; }
+    /* 5. ★ 활동기록(Gallery) 카드 긴급 수선 (가장 중요!) ★ */
+    .project-card { 
+        flex-direction: column; /* 가로(Flex) -> 세로(Column) 변경 */
+        height: auto;           /* 높이 고정(320px) 해제 -> 내용만큼 늘어나게 */
+        max-width: 600px;       /* 카드가 너무 넓어지지 않게 제한 */
+        margin: 0 auto 40px auto; /* 중앙 정렬 */
+    }
+
+    .project-img { 
+        flex: none;                /* 40% 고정 해제 */
+        width: 100%;               /* 너비 100% 꽉 채움 */
+        max-width: 100% !important; /* 강제 적용 */
+        height: 250px;             /* 사진 높이 적당히 */
+    }
+
+    .project-info {
+        padding: 25px; /* 여백 재조정 */
+    }
+
+    /* 6. 파트너 로고 간격 좁히기 */
+    .link-container {
+        gap: 40px; 
+    }
+    .partner-item img {
+        height: 40px; 
+    }
 }
 
 /* ==========================================================================
@@ -458,4 +612,136 @@ footer {
     border-top: 1px solid #444; /* 얇은 가로선 추가 */
     font-size: 0.8rem;
     color: #888; /* 더 흐리게 처리 */
+}
+
+/* ==========================================================================
+   ★ [[긴급 재수정]] 메인 화면 정중앙 텍스트 (가시성 확보) ★
+   ========================================================================== */
+
+/* 1. 중앙 영어 로고 (JINJU MEADOW...) */
+.hero-content .en-sub-title {
+    font-weight: 800 !important;       /* 글자 굵기를 최대로 (Extra Bold) */
+    color: #ffffff !important;         /* 완전한 흰색 */
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.9); /* 배경과 분리되는 진한 그림자 */
+    opacity: 1 !important;             /* 투명도 0% (완전 불투명) */
+    letter-spacing: 2px !important;    /* 글자 사이를 넓혀서 시원하게 */
+    font-size: 20px !important;        /* 크기도 조금 더 키움 */
+    margin-bottom: 25px !important;    /* 아래 한글과 간격 확보 */
+}
+
+/* 2. 중앙 한글 슬로건 (미래 세대와...) */
+.hero-content p {
+    font-weight: 700 !important;       /* 굵은 고딕체 (Bold) */
+    font-size: 24px !important;        /* 글자 크기 대폭 확대 (가독성 UP) */
+    color: #ffffff !important;         /* 흰색 유지 */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8); /* 글자 테두리 그림자 효과 */
+    line-height: 1.6 !important;       /* 줄 간격 여유 */
+    margin-top: 10px !important;
+}
+
+/* (참고) 제목인 '진주초원 사회적협동조합'도 덩달아 잘 보이게 처리 */
+.hero-content h1 {
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.8) !important;
+}
+
+/* ==========================================================================
+   ★ 정보공개(Disclosure) 테이블 디자인 ★
+   ========================================================================== */
+
+/* 전체 섹션 여백 */
+.disclosure-section {
+    padding: 60px 0;
+    min-height: 600px; /* 내용 없어도 화면 꽉 차게 */
+    background-color: #ffffff;
+}
+
+/* 테이블(표) 스타일 */
+.disclosure-table {
+    width: 100%;
+    border-collapse: collapse; /* 테두리 겹침 방지 */
+    border-top: 2px solid #2c5f2d; /* 상단 굵은 녹색 선 */
+}
+
+/* 표 머리글 (제목줄) */
+.disclosure-table thead th {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    font-weight: 700;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* 표 내용줄 */
+.disclosure-table tbody td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 15px;
+}
+
+/* 텍스트 정렬 */
+.td-center { text-align: center; }
+.td-left { text-align: left; padding-left: 20px; }
+
+/* 제목이 길어질 때 */
+.td-left:hover {
+    color: #2c5f2d;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* 구분 뱃지 (결산, 총회 등) */
+.cat-badge {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* 다운로드 버튼 */
+.download-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #2c5f2d;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: background 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #1e4220;
+}
+
+/* 컬럼 너비 설정 (PC 기준) */
+.col-num { width: 8%; }
+.col-cat { width: 10%; }
+.col-title { width: auto; } /* 제목은 남은 공간 다 씀 */
+.col-date { width: 15%; }
+.col-file { width: 12%; }
+
+/* 하단 안내 문구 */
+.info-text {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 14px;
+    color: #888;
+}
+
+/* 모바일 대응 (화면 좁을 때) */
+@media (max-width: 768px) {
+    /* 번호, 구분, 날짜 숨기기 (제목과 버튼만 보이게) */
+    .col-num, .col-cat, .col-date,
+    .disclosure-table td:nth-child(1),
+    .disclosure-table td:nth-child(2),
+    .disclosure-table td:nth-child(4) {
+        display: none;
+    }
+    .disclosure-table th, .disclosure-table td {
+        font-size: 14px;
+    }
 }
