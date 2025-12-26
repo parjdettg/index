@@ -1,31 +1,37 @@
-/* =================================
-   1. 페이지 기본 스타일 (초기화)
-==================================== */
+/* ==========================================================================
+   진주초원 사회적협동조합 공식 스타일시트 (Unified & Optimized)
+   Last Update: 2025-12-26
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 초기화 및 기본 설정 (Base)
+   -------------------------------------------------------------------------- */
 body, html {
     margin: 0;
     padding: 0;
-    font-family: '나눔고딕 ExtraBold', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-    background-color: #f8f8f8; /* 기본 배경색 */
-    box-sizing: border-box; /* 모든 요소의 크기 계산을 쉽게 함 */
+    font-family: 'Pretendard', '나눔고딕', 'Apple SD Gothic Neo', sans-serif;
+    background-color: #f8f8f8;
+    box-sizing: border-box;
+    color: #333;
+    line-height: 1.6;
 }
 
 *, *:before, *:after {
     box-sizing: inherit;
 }
 
+/* 공통 컨테이너 */
 .container {
     width: 100%;
-    max-width: 1100px; /* 사이트 콘텐츠의 최대 너비 */
-    margin: 0 auto; /* 중앙 정렬 */
-    padding: 0 20px; /* 좌우 여백 */
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-/* =================================
-   2. 헤더 (공통 스타일)
-==================================== */
+/* --------------------------------------------------------------------------
+   2. 헤더 (Header) - 공통 및 페이지별 테마
+   -------------------------------------------------------------------------- */
 .main-header {
-    top: 0;
-    left: 0;
     width: 100%;
     z-index: 1000;
     padding: 15px 0;
@@ -45,13 +51,14 @@ body, html {
     font-size: 20px;
     font-weight: 800;
     text-decoration: none;
+    line-height: 1.2;
 }
 
 .en-logo-text {
     display: block;
-    font-size: 10px; 
-    font-weight: 400; 
-    text-shadow: none; 
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
 }
 
 .nav-menu {
@@ -65,99 +72,83 @@ body, html {
     font-weight: 500;
     padding: 10px 15px;
     border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-/* --- 2-1. index.html (메인) 헤더 전용 스타일 --- */
+/* [테마 A] 메인 페이지용 (투명 배경 + 흰 글씨) */
 .page-index .main-header {
-    position: absolute; /* 메인에선 이미지 위에 겹치기 */
+    position: absolute;
+    top: 0; left: 0;
     background-color: transparent;
 }
-.page-index .logo,
-.page-index .nav-menu a {
-    color: white; /* 흰색 글씨 */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* 그림자 */
-}
-.page-index .en-logo-text {
-    color: rgba(255, 255, 255, 0.9);
-}
-.page-index .nav-menu a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* --- 2-2. about.html (서브) 헤더 전용 스타일 --- */
-.page-about .main-header {
-    position: relative; /* 서브에선 일반 흐름대로 */
-    background-color: white; /* 흰색 배경 */
-    border-bottom: 1px solid #eee; /* 하단 구분선 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 은은한 그림자 */
-}
-.page-about .logo,
-.page-about .nav-menu a {
-    color: #333333; /* 어두운 글씨 */
-    text-shadow: none; /* 그림자 없음 */
-}
-.page-about .en-logo-text {
-    color: #777777;
-}
-.page-about .nav-menu a:hover {
-    background-color: #f4f4f4;
-    color: #3B7A57; /* 메인 컬러 */
-}
-
-/* =================================
-   3. 메인 배경 이미지 (Hero 섹션)
-==================================== */
-.hero-section {
-    min-height: 100vh; 
+.page-index .logo, .page-index .nav-menu a {
     color: white;
-    /* ★ background-image 속성은 삭제합니다. */
-    position: relative; /* ★ 하위 요소를 정렬할 기준점 */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+.page-index .en-logo-text { color: rgba(255, 255, 255, 0.9); text-shadow: none; }
+.page-index .nav-menu a:hover { background-color: rgba(255, 255, 255, 0.15); }
+
+/* [테마 B] 서브 페이지용 (흰 배경 + 검은 글씨) */
+/* (about, disclosure, business, gallery 등 모든 서브 페이지 공통 적용) */
+.main-header:not(.page-index .main-header) {
+    position: relative;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+}
+.main-header:not(.page-index .main-header) .logo,
+.main-header:not(.page-index .main-header) .nav-menu a {
+    color: #333;
+    text-shadow: none;
+}
+.main-header:not(.page-index .main-header) .en-logo-text { color: #777; }
+.main-header:not(.page-index .main-header) .nav-menu a:hover {
+    background-color: #f4f4f4;
+    color: #2c5f2d; /* 진녹색 포인트 */
+}
+
+/* --------------------------------------------------------------------------
+   3. 메인 화면 (Index) - Hero 섹션
+   -------------------------------------------------------------------------- */
+.hero-section {
+    min-height: 100vh;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    overflow: hidden; /* ★ 삐져나가는 요소 숨기기 */
+    overflow: hidden;
+    color: white;
 }
 
 .slide-backgrounds {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* ★ z-index: 0 (콘텐츠보다 뒤에 있도록) */
-    z-index: 0; 
+    z-index: 0;
 }
 
 .slide-item {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    
     background-size: cover;
     background-position: center center;
-    
-    opacity: 0; /* ★ 평소엔 투명 */
-    /* ★ 1.5초 동안 부드럽게 나타나고 사라짐 */
-    transition: opacity 1.5s ease-in-out; 
-    
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
     z-index: 1;
 }
 
-.slide-item.active {
-    opacity: 1; /* ★ 불투명하게 보임 */
-    z-index: 2; /* 다른 슬라이드보다 위로 */
-}
+.slide-item.active { opacity: 1; z-index: 2; }
 
+/* 어두운 덮개 (글자 잘 보이게) */
 .hero-section::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); 
-    /* ★ z-index: 3 (슬라이드보다 위, 텍스트보다 아래) */
-    z-index: 3; 
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 3;
 }
 
 .hero-content {
-    position: relative; 
-    /* ★ z-index: 4 (가장 위에 보임) */
+    position: relative;
     z-index: 4;
     padding: 20px;
 }
@@ -166,967 +157,376 @@ body, html {
     font-size: 52px;
     font-weight: 800;
     margin: 0 0 15px 0;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-}
-
-.hero-content .en-sub-title {
-    font-size: 18px;
-    font-weight: 400;
-    margin: 0 0 25px 0;
-    color: rgba(255, 255, 255, 0.9);
-    letter-spacing: 1px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
     font-size: 22px;
-    font-weight: 500;
     margin-bottom: 30px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .cta-button {
     display: inline-block;
-    background-color: #3B7A57; 
+    background-color: #2c5f2d;
     color: white;
     text-decoration: none;
     padding: 14px 35px;
     border-radius: 5px;
     font-weight: 600;
     font-size: 17px;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: all 0.3s;
 }
-
 .cta-button:hover {
-    background-color: #5aa667; 
-    transform: translateY(-2px); 
+    background-color: #1e4220;
+    transform: translateY(-2px);
 }
 
-/* =================================
-   4. 관련 사이트 로고 섹션 (index.html)
-==================================== */
-/* =================================
-   4. 관련 사이트 로고 섹션 (index.html)
-==================================== */
-/* ★ .page-index 이름표 추가 */
-.page-index .partners-section {
-    background-color: #ffffff;
-    padding: 40px 0; 
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-}
-
-/* ★ .page-index 이름표 추가 */
-.page-index .link-container {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    flex-wrap: wrap; 
-    gap: 40px 50px; 
-}
-
-/* ★ .page-index 이름표 추가 */
-.page-index .partner-item {
-    text-decoration: none;
-}
-
-/* ★ .page-index 이름표 추가 */
-.page-index .partner-item img {
-    height: 60px;
-    width: auto;
-    object-fit: contain; 
-    filter: grayscale(100%);
-    opacity: 0.7; 
-    transition: filter 0.3s ease, opacity 0.3s ease;
-}
-
-/* ★ .page-index 이름표 추가 */
-.page-index .partner-item:hover img {
-    filter: grayscale(0%); 
-    opacity: 1.0; 
-}
-
-/* ★ .page-index 이름표 추가 */
-.page-index .partner-item img.logo-nts {
-    height: 50px;
-}
-
-/* =================================
-   5. 푸터 (Footer) 섹션 (공통)
-==================================== */
-footer {
-    background-color: #f4f4f4;
-    padding: 50px 0; 
-    text-align: center; 
-}
-
-.footer-info p {
-    font-size: 15px; 
-    color: #555; 
-    line-height: 1.7; 
-    margin: 8px 0; 
-    font-weight: 400; /* 일반 굵기 */
-}
-
-.info-divider {
-    color: #ccc; 
-    margin: 0 10px; 
-}
-
-.copyright {
-    margin-top: 25px; 
-    font-size: 13px; 
-    color: #888; 
-    font-weight: 400; 
-}
-
-/* =================================
-   6. 조합소개 (about.html) 전용 스타일
-   ( .page-about 클래스로 충돌 방지 )
-==================================== */
-
-/* --- 6-1. 이사장 인사말 섹션 --- */
-.page-about .greeting-section {
-    padding: 80px 0; 
-    background-color: #f9f9f9; 
-}
-
-.page-about .section-title {
-    font-size: 36px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #333;
-}
-
-.page-about .greeting-box {
-    display: flex;
-    gap: 40px; 
-    background-color: #ffffff; 
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
-}
-
-.page-about .greeting-photo {
-    flex-basis: 300px; 
-    flex-shrink: 0; 
-    text-align: center;
-}
-
-.page-about .greeting-photo img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10%;
-    object-fit: cover; 
-    margin-bottom: 20px;
-
-    /* ★★★ 그라데이션 테두리로 변경 ★★★ */
-
-    /* 1. 테두리 두께(5px)를 지정하고, 색상은 '투명(transparent)'으로 합니다. */
-    border: 5px solid transparent;
-    
-    /* 2. 'border-image'를 사용해 테두리 영역에 그라데이션을 채웁니다. */
-    border-image-source: linear-gradient(to bottom right, #3B7A57, #a0cda7);
-    border-image-slice: 1;
-}
-
-.page-about .greeting-photo .chairperson-name {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 5px;
-    font-weight: 400; 
-}
-
-.page-about .greeting-photo .chairperson-title {
-    font-size: 18px;
-    color: #333;
-    font-weight: 500;
-}
-.page-about .greeting-photo .chairperson-title strong {
-    font-weight: 700; 
-}
-
-.page-about .greeting-text {
-    flex-grow: 1; 
-}
-
-.page-about .greeting-text .greeting-title {
-    font-size: 32px;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #3B7A57; 
-    padding-bottom: 10px;
-}
-
-.page-about .greeting-text p {
-    font-size: 17px; 
-    line-height: 1.8; 
-    color: #444;
-    margin-bottom: 25px;
-    font-weight: 400; 
-}
-
-.page-about .signature-area {
-    text-align: right; 
-    margin-top: 40px;
-}
-
-.page-about .signature-area .signature-img {
-    max-width: 210px;
-    margin-bottom: 10px;
-}
-
-.page-about .signature-area .signature-line {
-    font-size: 19px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 0;
-}
-.page-about .signature-area .signature-line strong {
-    font-weight: 700;
-}
-
-/* --- 6-2. 미션/비전 섹션 (카드) --- */
-.page-about .mission-section {
-    
-    /* background-color: #ffffff; (기존 흰색 배경 대신 그라데이션 사용) */
-
-    /* ★★★ 여기에 그라데이션 코드를 적용합니다! ★★★ */
-    /* 'to bottom' : 위에서 아래로
-      '#dcedde' : 사이트 메인 컬러와 어울리는 매우 연한 초록색
-      '#ffffff' : 끝 색상은 기존의 흰색
-    */
-    background: linear-gradient(to bottom, #eaf2eb, #ffffff);
-
-    padding: 80px 0;
-}
-
-.page-about .card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px; 
-    margin-top: 30px; 
-    /* (index.html의 .card-grid와는 완전히 다르게 스타일됨) */
-}
-
-.page-about .card-item {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-top: 5px solid #ccc; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* (index.html의 .card-item과 다르게 스타일됨) */
-}
-
-.page-about .card-item:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.page-about .card-item .mission-number {
-    font-size: 36px;
-    font-weight: 900;
-    margin-bottom: 10px;
-}
-
-.page-about .card-item[data-color="blue"] {
-    border-top-color: #007bff;
-}
-.page-about .card-item[data-color="blue"] .mission-number {
-    color: #007bff;
-}
-
-.page-about .card-item[data-color="red"] {
-    border-top-color: #ff6347;
-}
-.page-about .card-item[data-color="red"] .mission-number {
-    color: #ff6347;
-}
-
-.page-about .card-item[data-color="green"] {
-    border-top-color: #3B7A57;
-}
-.page-about .card-item[data-color="green"] .mission-number {
-    color: #3B7A57;
-}
-
-.page-about .card-item h4 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-.page-about .card-item p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #555;
-    margin-bottom: 0;
-    font-weight: 400;
-}
-
-/* --- 6-3. 조직도 섹션 --- */
-.page-about .org-chart-title-area {
-    text-align: center;
-    margin-top: 80px; 
-    margin-bottom: 30px; 
-}
-
-.page-about .org-chart-title {
-    font-size: 32px; 
-    font-weight: 800; 
-    color: #1A1A1A; 
-    margin-bottom: 5px;
-}
-
-.page-about .org-chart-subtitle {
-    font-size: 18px; 
-    color: #4A4A4A; 
-    margin-top: 5px;
-    font-weight: 400;
-}
-
-.page-about .org-chart-divider {
-    width: 60px; 
-    border: 2px solid #3B7A57; 
-    margin: 20px auto;
-}
-
-.page-about .org-chart-flow {
-    display: flex; 
-    flex-wrap: nowrap; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 15px; 
-    margin: 0 auto 40px auto; 
-    padding: 0 20px; 
-}
-
-.page-about .org-node {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px; 
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-}
-
-.page-about .org-node strong {
-    display: block;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-}
-
-.page-about .org-node span {
-    font-size: 14px;
-    color: #555;
-    font-weight: 400;
-}
-
-.page-about .org-arrow {
-    font-size: 24px;
-    font-weight: 700;
-    color: #3B7A57; 
-    flex-grow: 0;
-    flex-shrink: 0;
-}
-
-/* =================================
-   7. 모바일 반응형 스타일 (전체)
-==================================== */
-
-@media (max-width: 768px) {
-    
-    /* --- 7-1. index.html 모바일 --- */
-    
-    .page-index .nav-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-    }
-    .page-index .nav-menu {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 15px;
-    }
-    .page-index .nav-menu a {
-        width: 100%;
-        text-align: center;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    .page-index .nav-menu a:last-child {
-        border-bottom: none;
-    }
-
-    .hero-content h1 {
-        font-size: 36px;
-    }
-    .hero-content p {
-        font-size: 18px;
-    }
-
-    .page-index .link-container {
-        /* (PC에서는 justify-content: center 였음) */
-        /* 모바일에선 로고들이 세로로 쌓이도록 함 */
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
-    }
-    .page-index .partner-item img {
-        height: 50px; /* 모바일에선 로고 높이 50px */
-    }
-    .page-index .partner-item img.logo-nts {
-        height: 40px; /* 국세청은 40px */
-    }
-    
-    
-    /* --- 7-2. about.html 모바일 --- */
-
-    /* about 헤더는 PC와 동일하게 유지 (이미 1줄임) */
-    
-    .page-about .greeting-box {
-        flex-direction: column; /* 2단 -> 1단 쌓기 */
-        padding: 25px; 
-        gap: 25px; 
-    }
-
-    .page-about .card-grid {
-        grid-template-columns: 1fr; /* 3단 -> 1단 쌓기 */
-        gap: 20px; 
-    }
-
-    .page-about .org-chart-flow {
-        flex-wrap: wrap; /* 한 줄 -> 여러 줄로 줄바꿈 허용 */
-        justify-content: center;
-    }
-
-    .page-about .org-node {
-        flex-basis: 180px; 
-        flex-grow: 1; 
-    }
-
-    .page-about .greeting-photo {
-        flex-basis: auto; /* 고정 너비 해제 */
-        width: 100%;
-    }
-    
-    .page-about .greeting-text .greeting-title {
-        font-size: 28px; 
-    }
-
-    .page-about .card-grid {
-        grid-template-columns: 1fr; /* 3단 -> 1단 쌓기 */
-        gap: 20px; 
-    }
-
-    .page-about .org-chart-flow {
-        flex-wrap: wrap; /* 한줄 -> 여러줄 */
-        justify-content: center;
-    }
-
-    .page-about .org-node {
-        flex-basis: 180px; 
-        flex-grow: 1; 
-    }
-}
-
-/* --- 6-2. 미션/비전 섹션 (카드) --- */
-.page-about .mission-section {
-    /* '이사장 인사말'의 연한 회색(#f9f9f9)과 
-       구분되도록 흰색(#ffffff) 배경을 줍니다.
-    */
-    background-color: #ffffff; 
-    padding: 80px 0;
-    
-    /* (참고: .mission-section 안의 제목 부분은
-       about.html에 style="..." 속성으로 이미 
-       디자인이 적용되어 있습니다!)
-    */
-}
-
-/* '미션 카드' 3개를 감싸는 그리드 */
-.page-about .card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px; /* 카드 사이의 간격 */
-    max-width: 900px;
-    margin: 30px auto 0;
-}
-
-/* 개별 미션 카드 스타일 */
-.page-about .card-item {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px; /* 모서리 둥글게 */
-    
-    /* 은은한 그림자 효과 */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    
-    /* ★ HTML의 data-color 속성과 연동될 상단 테두리 */
-    border-top: 5px solid #ccc; /* 기본 회색 */
-    
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* 카드에 마우스를 올렸을 때 */
-.page-about .card-item:hover {
-    transform: translateY(-5px); /* 살짝 위로 이동 */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* 그림자 진하게 */
-}
-
-/* 카드 안의 '01', '02', '03' 숫자 */
-.page-about .card-item .mission-number {
-    font-size: 36px;
-    font-weight: 900;
-    margin-bottom: 10px;
-}
-
-/* ★ data-color 속성에 따라 색상 적용 */
-/* (스크린샷에 이미 색상이 있는 것으로 보아, 
-  HTML의 style 속성을 덮어쓰거나 대체합니다) 
-*/
-.page-about .card-item[data-color="blue"] {
-    border-top-color: #007bff;
-}
-.page-about .card-item[data-color="blue"] .mission-number {
-    color: #007bff;
-}
-
-.page-about .card-item[data-color="red"] {
-    border-top-color: #ff6347;
-}
-.page-about .card-item[data-color="red"] .mission-number {
-    color: #ff6347;
-}
-
-.page-about .card-item[data-color="green"] {
-    border-top-color: #3B7A57;
-}
-.page-about .card-item[data-color="green"] .mission-number {
-    color: #3B7A57;
-}
-
-/* 카드 안의 제목 (h4) */
-.page-about .card-item h4 {
-    font-size: 22px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-/* 카드 안의 본문 (p) */
-.page-about .card-item p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: #555;
-    margin-bottom: 0;
-    font-weight: 400; /* ★ ExtraBold 덮어쓰기 (중요) */
-}
-
-
-/* --- 6-3. 조직도 섹션 --- */
-.page-about .org-chart-title-area {
-    text-align: center;
-    margin-top: 80px; /* 카드와 조직도 제목 사이 간격 */
-    margin-bottom: 30px; 
-}
-
-.page-about .org-chart-title {
-    font-size: 32px; 
-    font-weight: 800; 
-    color: #1A1A1A; 
-    margin-bottom: 5px;
-}
-
-.page-about .org-chart-subtitle {
-    font-size: 18px; 
-    color: #4A4A4A; 
-    margin-top: 5px;
-    font-weight: 400; /* ★ ExtraBold 덮어쓰기 */
-}
-
-.page-about .org-chart-divider {
-    width: 60px; 
-    border: 2px solid #3B7A57; 
-    margin: 20px auto;
-}
-
-.page-about .org-chart-flow {
-    display: flex; 
-    flex-wrap: nowrap; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 15px; 
-    margin: 0 auto 40px auto; 
-    padding: 0 20px; 
-}
-
-.page-about .org-node {
-    background-color: #f8f9fa; 
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px; 
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-}
-
-.page-about .org-node strong {
-    display: block;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-}
-
-.page-about .org-node span {
-    font-size: 14px;
-    color: #555;
-    font-weight: 400; 
-}
-
-/* 화살표 */
-.page-about .org-arrow {
-    font-size: 24px;
-    font-weight: 700;
-    color: #3B7A57; 
-    flex-grow: 0;
-    flex-shrink: 0;
-}
-
-.page-disclosure .main-header {
-    position: relative; 
-    background-color: white; 
-    border-bottom: 1px solid #eee; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-}
-.page-disclosure .logo,
-.page-disclosure .nav-menu a {
-    color: #333333; 
-    text-shadow: none; 
-}
-.page-disclosure .en-logo-text {
-    color: #777777;
-}
-.page-disclosure .nav-menu a:hover {
-    background-color: #f4f4f4;
-    color: #3B7A57; 
-}
-
-.page-disclosure .disclosure-section {
-    background-color: #ffffff; /* 흰색 배경 */
-    padding: 80px 0;
-}
-
-.page-disclosure .disclosure-title-area {
-    text-align: center;
-    margin-bottom: 50px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 30px;
-}
-
-.page-disclosure .disclosure-title {
-    font-size: 36px;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.page-disclosure .disclosure-subtitle {
-    font-size: 18px;
-    color: #555;
-    margin: 0;
-    font-weight: 400;
-}
-
-.page-disclosure .disclosure-table-wrapper {
-    width: 100%;
-    overflow-x: auto; 
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.page-disclosure .disclosure-table {
-    width: 100%;
-    border-collapse: collapse; 
-    text-align: left;
-}
-
-.page-disclosure .disclosure-table th {
-    background-color: #f9f9f9; 
-    padding: 18px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid #ddd;
-}
-
-.page-disclosure .disclosure-table td {
-    padding: 20px 20px;
-    font-size: 16px;
-    color: #444;
-    border-bottom: 1px solid #eee;
-    font-weight: 400; 
-    vertical-align: middle; 
-}
-
-.page-disclosure .disclosure-table tr:last-child td {
-    border-bottom: none;
-}
-
-.page-disclosure .col-year { width: 15%; }
-.page-disclosure .col-title { width: 40%; }
-.page-disclosure .col-donation { width: 20%; }
-.page-disclosure .col-link { width: 25%; text-align: center; }
-
-.page-disclosure .td-year strong {
-    font-weight: 700;
-    color: #3B7A57; 
-}
-
-.page-disclosure .download-button {
-    display: inline-block;
-    background-color: #3B7A57; 
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
-
-.page-disclosure .download-button:hover {
-    background-color: #2c5a41; 
-}
-
-@media (max-width: 768px) {
-    
-
-    .page-disclosure .disclosure-title {
-        font-size: 30px;
-    }
-
-    .page-disclosure .disclosure-table {
-        font-size: 14px;
-        min-width: 600px; 
-    }
-    .page-disclosure .disclosure-table th,
-    .page-disclosure .disclosure-table td {
-        padding: 15px;
-    }
-    .page-disclosure .download-button {
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-}
-
-/* --- ★ 카드 섹션 디자인 (세련된 모던 스타일) ★ --- */
+/* --------------------------------------------------------------------------
+   4. 메인 화면 (Index) - 카드 섹션 (모던 스타일)
+   -------------------------------------------------------------------------- */
+/* 주의: About 페이지의 카드와 겹치지 않게 .page-index로 한정하거나 별도 클래스 사용 */
 
-.card-grid {
+.page-index .card-grid {
     display: flex;
     justify-content: center;
     gap: 25px;
     padding: 0 20px;
-    max-width: 1140px; /* 너비를 살짝 줄여 집중도 높임 */
-    margin: 0 auto;
-    
-    /* 위치 조정: 배경 이미지와 겹치는 정도 조절 */
-    margin-top: -100px; 
-    margin-bottom: 100px;
+    max-width: 1140px;
+    margin: -100px auto 100px auto; /* Hero 섹션 위로 살짝 올라오게 */
     position: relative;
     z-index: 10;
 }
 
-.card-item {
+.page-index .card-item {
     background-color: #ffffff;
     flex: 1;
     min-width: 280px;
-    padding: 50px 30px; /* 내부 여백을 늘려 시원하게 */
-    border-radius: 8px; /* 둥글기 정도를 줄여서 더 단정하게 */
-    
-    /* 그림자를 아주 은은하게 변경 (고급스러움의 핵심) */
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
-    border-bottom: 3px solid transparent; /* 하단 포인트 선 준비 */
-    
-    text-align: left; /* 텍스트를 왼쪽 정렬로 변경 (더 전문적으로 보임) */
+    padding: 50px 30px;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    border-bottom: 3px solid transparent;
+    text-align: left;
     transition: all 0.3s ease;
 }
 
-/* 마우스 올렸을 때 */
-.card-item:hover {
+.page-index .card-item:hover {
     transform: translateY(-7px);
     box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-    border-bottom-color: #2c5f2d; /* 하단에 진녹색 포인트 줄 생김 */
+    border-bottom-color: #2c5f2d;
 }
 
-/* 아이콘 박스 */
 .icon-box {
-    width: 60px;
-    height: 60px;
+    width: 60px; height: 60px;
     margin-bottom: 25px;
-    color: #2c5f2d; /* 아이콘 색상: 진녹색 */
+    color: #2c5f2d;
 }
 
-/* SVG 아이콘 크기 제어 */
-.icon-box svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* 제목 스타일 */
-.card-item h3 {
+.page-index .card-item h3 {
     font-size: 1.35rem;
     margin-bottom: 15px;
-    color: #111; /* 완전 검정보다는 아주 진한 회색 */
+    color: #111;
     font-weight: 700;
-    letter-spacing: -0.5px; /* 자간을 살짝 좁혀 단단한 느낌 */
 }
 
-/* 본문 스타일 */
-.card-item p {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.7; /* 줄 간격을 넓혀 읽기 편하게 */
-    margin-bottom: 30px;
-    word-break: keep-all;
-}
-
-/* '자세히 보기' 텍스트 링크 스타일 */
 .read-more {
     font-size: 0.95rem;
     font-weight: 600;
-    color: #2c5f2d; /* 진녹색 */
+    color: #2c5f2d;
     text-decoration: none;
-    display: inline-flex;
+}
+
+/* --------------------------------------------------------------------------
+   5. 조합소개 (About) - 인사말, 미션, 조직도
+   -------------------------------------------------------------------------- */
+.page-about .greeting-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+}
+
+.page-about .greeting-box {
+    display: flex;
+    gap: 40px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.page-about .greeting-photo img {
+    width: 200px; height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 5px solid transparent;
+    border-image-source: linear-gradient(to bottom right, #3B7A57, #a0cda7);
+    border-image-slice: 1;
+}
+
+/* 미션 섹션 (그라데이션 배경) */
+.page-about .mission-section {
+    background: linear-gradient(to bottom, #eaf2eb, #ffffff);
+    padding: 80px 0;
+}
+
+/* About 페이지 전용 카드 그리드 (Index 페이지와 다름!) */
+.page-about .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 30px auto 0;
+}
+
+.page-about .card-item {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-top: 5px solid #ccc; /* 기본 색상 */
+    transition: transform 0.3s;
+}
+
+.page-about .card-item:hover { transform: translateY(-5px); }
+
+/* 색상별 포인트 */
+.page-about .card-item[data-color="blue"] { border-top-color: #007bff; }
+.page-about .card-item[data-color="blue"] .mission-number { color: #007bff; }
+
+.page-about .card-item[data-color="red"] { border-top-color: #ff6347; }
+.page-about .card-item[data-color="red"] .mission-number { color: #ff6347; }
+
+.page-about .card-item[data-color="green"] { border-top-color: #2c5f2d; }
+.page-about .card-item[data-color="green"] .mission-number { color: #2c5f2d; }
+
+.mission-number { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
+
+/* 조직도 */
+.page-about .org-chart-flow {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    transition: color 0.2s;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
 }
 
-.read-more:hover {
-    color: #e67e22; /* 오렌지색 포인트 */
+.org-node {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: center;
 }
 
-/* 모바일 대응 */
-@media (max-width: 768px) {
-    .card-grid {
-        flex-direction: column;
-        margin-top: 30px;
-    }
-    .card-item {
-        text-align: center; /* 모바일에서는 중앙 정렬이 더 안정적 */
-        padding: 30px 20px;
-    }
-    .icon-box {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .read-more {
-        justify-content: center;
-    }
+/* --------------------------------------------------------------------------
+   6. 정보공개 (Disclosure) - 테이블 디자인
+   -------------------------------------------------------------------------- */
+.page-disclosure .disclosure-section { padding: 80px 0; }
+
+.disclosure-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* --- ★ 활동기록(Gallery) 디자인 ★ --- */
+.disclosure-table th {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-bottom: 2px solid #ddd;
+    color: #333;
+}
 
-.gallery-section {
+.disclosure-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+}
+
+.download-button {
+    background-color: #2c5f2d;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   7. ★ 활동기록/주요사업 (Gallery & Business) - 쇼케이스 스타일 ★
+   (새로 추가된 핵심 디자인)
+   -------------------------------------------------------------------------- */
+.activity-section, .business-section {
     padding: 80px 20px;
-    background-color: #f9f9f9; /* 배경은 아주 연한 회색 */
+    background-color: #f8f9fa; /* 연한 회색 배경 */
 }
 
-/* 섹션 제목 스타일 */
 .section-title {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
 }
-
 .section-title h2 {
     font-size: 2rem;
-    color: #2c5f2d; /* 진녹색 (브랜드 컬러) */
-    margin-bottom: 10px;
+    color: #2c5f2d;
     font-weight: 700;
+    margin-bottom: 10px;
 }
 
-.section-title p {
-    color: #666;
-}
-
-/* 그리드 레이아웃 설정 (핵심!) */
-.photo-grid {
-    display: grid;
-    /* 화면 크기에 따라 자동으로 열 개수 조절 (반응형) */
-    /* 최소 300px 크기는 유지하되, 공간이 남으면 꽉 채움 */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px; /* 사진 사이 간격 */
-    max-width: 100%;
+/* 리스트 컨테이너 */
+.project-list {
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 0 40px;
-}
-
-/* 개별 사진 박스 */
-.photo-item {
-    position: relative; /* 글자를 사진 위에 얹기 위한 기준점 */
-    overflow: hidden; /* 사진이 박스 밖으로 삐져나오지 않게 */
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    aspect-ratio: 4 / 3; /* 정사각형 비율 강제 유지 (인스타 감성) */
-    cursor: pointer;
-}
-
-/* 이미지 스타일 */
-.photo-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 비율 깨지지 않고 꽉 차게 */
-    transition: transform 0.5s ease; /* 줌인 효과 부드럽게 */
-}
-
-/* 마우스 올렸을 때(Hover) 덮개 효과 */
-.photo-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* 반투명 검은색 배경 */
-    color: white;
     display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    opacity: 0; /* 평소에는 투명해서 안 보임 */
-    transition: opacity 0.3s ease;
+    flex-direction: column;
+    gap: 40px;
 }
 
-.photo-overlay .text {
-    text-align: center;
-    transform: translateY(20px); /* 글자가 살짝 아래 있다가 */
-    transition: transform 0.3s ease;
+/* 개별 카드 (가로형) */
+.project-card {
+    display: flex;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
 }
 
-/* 마우스 올렸을 때 동작 */
-.photo-item:hover img {
-    transform: scale(1.1); /* 사진이 살짝 확대됨 */
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-.photo-item:hover .photo-overlay {
-    opacity: 1; /* 검은 배경이 나타남 */
+/* 왼쪽 이미지 */
+.project-img {
+    flex: 0 0 40%;
+    position: relative;
+    min-height: 280px;
+}
+.project-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
 }
 
-.photo-item:hover .text {
-    transform: translateY(0); /* 글자가 제자리로 올라옴 */
+/* 상태 뱃지 */
+.status-badge {
+    position: absolute;
+    top: 20px; left: 20px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.status-badge.ing { background-color: #2c5f2d; }
+.status-badge.done { background-color: #7f8c8d; }
+
+/* 오른쪽 정보 */
+.project-info {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.photo-overlay h3 {
-    font-size: 1.4rem;
-    margin-bottom: 5px;
-    color: #fff;
+.project-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 15px;
 }
 
-.photo-overlay p {
+.project-meta {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 15px;
+}
+.project-meta strong { color: #2c5f2d; }
+
+.project-desc {
     font-size: 1rem;
-    color: #ddd;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    word-break: keep-all;
+}
+
+.project-tags {
+    display: flex; gap: 10px; flex-wrap: wrap;
+}
+.project-tags span {
+    background-color: #f0f4f0;
+    color: #2c5f2d;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   8. 파트너 로고 및 푸터
+   -------------------------------------------------------------------------- */
+.partners-section {
+    padding: 40px 0;
+    border-top: 1px solid #eee;
+    background: white;
+}
+.link-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.partner-item img {
+    height: 50px;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s;
+}
+.partner-item:hover img { filter: grayscale(0); opacity: 1; }
+
+footer {
+    background-color: #f4f4f4;
+    padding: 50px 0;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+}
+.footer-info p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+.copyright { margin-top: 20px; color: #999; font-size: 0.8rem; }
+
+/* --------------------------------------------------------------------------
+   9. 모바일 반응형 (Mobile Responsive)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* 네비게이션 */
+    .nav-container { flex-direction: column; padding: 15px; }
+    .nav-menu { flex-direction: column; width: 100%; margin-top: 15px; gap: 0; }
+    .nav-menu a {
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 12px;
+    }
+    .page-index .nav-menu a { border-bottom: 1px solid rgba(255,255,255,0.2); }
+
+    /* Hero */
+    .hero-content h1 { font-size: 32px; }
+    .hero-content p { font-size: 18px; }
+
+    /* Index 카드 */
+    .page-index .card-grid { flex-direction: column; margin-top: 30px; }
+    
+    /* About */
+    .page-about .greeting-box { flex-direction: column; }
+    .page-about .card-grid { grid-template-columns: 1fr; }
+    
+    /* Disclosure */
+    .disclosure-table th, .disclosure-table td { padding: 10px; font-size: 0.85rem; }
+    
+    /* Gallery & Business (Showcase) */
+    .project-card { flex-direction: column; }
+    .project-img { height: 220px; min-height: auto; }
+    .project-info { padding: 25px; }
 }
