@@ -6,6 +6,7 @@
 const activities = [
     {
         id: 1,
+        sortDate: "2025-03-17",
         title: "학교 밖 청소년 대상 삼겹살 나눔",
         date: "2025.03.17",
         location: "진주초원 사회적협동조합",
@@ -22,6 +23,7 @@ const activities = [
 
      {
         id: 2,
+        sortDate: "2025-03-28",
         title: "학교 밖 청소년과 함께 한라산 탐방",
         date: "2025.03.28",
         location: "제주도",
@@ -38,6 +40,7 @@ const activities = [
 
      {
         id: 3,
+        sortDate: "2025-03-29",
         title: "학교 밖 청소년 대상 요리 실습",
         date: "2025.03.29",
         location: "진주초원 사회적협동조합 실습실",
@@ -48,45 +51,117 @@ const activities = [
             "images/aa6.jpg",
             "images/aa7.jpg",
             "images/aa8.jpg",
-            "images/aa9.jpg"
+            "images/aa9.jpg",
         ]
     },
 
-    // ★ 새로운 활동을 추가하려면 위 { ... } 덩어리를 복사해서 여기에 붙여넣고 내용만 바꾸세요!
+    {
+        id: 4,
+        sortDate: "2025-04-01",
+        title: "학교 밖 청소년과 함께 식사",
+        date: "2025.04.01",
+        location: "진주시 식당",
+        desc: "검정고시를 준비하는 친구들에게 맛있는 밥을 사주는 활동을 했습니다.",
+        tags: ["#찾아가기", "#청소년"],
+        mainImg: "images/a.jpg",
+        subImgs: [
+            "images/a1.jpg",
+            "images/a2.jpg",
+            "images/a3.jpg",
+            "images/a1.jpg",
+        ]
+    },
+
+    {
+        id: 5,
+        sortDate: "2025-04-07",
+        title: "학교 밖 청소년 외부활동(채계산 등반)",
+        date: "2025.04.07",
+        location: "전북 순창군",
+        desc: "지친 일상 속에서 다시 힘을 충전하기 위해 함께 등산을 하러 떠났습니다.",
+        tags: ["#등산", "#구름다리", "#체력"],
+        mainImg: "images/a4.jpg",
+        subImgs: [
+            "images/a5.jpg",
+            "images/a6.jpg",
+            "images/a7.jpg",
+            "images/a8.jpg",
+        ]
+    },
+
+    {
+        id: 6,
+        sortDate: "2025-01-19
+        ",
+        title: "취약계층 대상 농촌 힐링 프로그램",
+        date: "2025.01.19",
+        location: "진주초원 사회적협동조합 공용 텃밭",
+        desc: "지친 일상을 보내는 취약계층 학생들이 평화로운 농촌 자연 속에서 몸과 마음의 온전한 회복을 경험했습니다.",
+        tags: ["#심고거둠", "#무럭무럭", "#자라나길"],
+        mainImg: "images/a9.jpg",
+        subImgs: [
+            "images/a10.jpg",
+            "images/a11.jpg",
+            "images/a12.jpg",
+            "images/a13.jpg",
+        ]
+    },
+
+    {
+        id: 7,
+        title: "취약계층 대상 농촌 힐링 프로그램",
+        date: "2024.01.19",
+        location: "진주초원 사회적협동조합 공용 텃밭",
+        desc: "지친 일상을 보내는 취약계층 학생들이 평화로운 농촌 자연 속에서 몸과 마음의 온전한 회복을 경험했습니다.",
+        tags: ["#심고거둠", "#무럭무럭", "#자라나길"],
+        mainImg: "images/a9.jpg",
+        subImgs: [
+            "images/a10.jpg",
+            "images/a11.jpg",
+            "images/a12.jpg",
+            "images/a13.jpg",
+        ]
+    },
+
+    // 새로운 활동을 추가하려면 위 { ... } 덩어리를 복사해서 여기에 붙여넣고 내용만 바꾸세요!
 ];
 
+// 2. [공장 설정]
+let currentIndex = 0;      
+const itemsPerLoad = 3;    // ★ 한 번에 3개씩 보여주기
 
-// 2. [공장 기계] 데이터를 가져와서 HTML로 찍어내는 함수
+// 3. [공장 기계]
 function renderGallery() {
-    const container = document.getElementById('gallery-grid'); // HTML의 빈 상자를 찾음
-    let htmlString = ''; // 여기에 HTML 코드를 차곡차곡 쌓을 예정
+    const container = document.getElementById('gallery-grid');
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    
+    activities.sort((a, b) => {
+        return new Date(b.sortDate) - new Date(a.sortDate);
+    });
 
-    // 데이터 하나씩 꺼내서 반복(Loop)
-    activities.forEach(item => {
-        
-        // 추가 사진(subImgs)들을 HTML로 만드는 과정
+    const nextBatch = activities.slice(currentIndex, currentIndex + itemsPerLoad);
+
+    nextBatch.forEach(item => {
         let subImagesHTML = '';
         item.subImgs.forEach(img => {
             subImagesHTML += `<img src="${img}" alt="추가 사진">`;
         });
 
-        // 태그(tags)들을 HTML로 만드는 과정
         let tagsHTML = '';
         item.tags.forEach(tag => {
             tagsHTML += `<span>${tag}</span>`;
         });
 
-        // ★ 우리가 만들었던 그 '매직 앨범' 디자인 틀에 내용을 끼워넣기
-        htmlString += `
+        const cardHTML = `
             <div class="project-card">
                 <div class="gallery-container">
                     <div class="main-view">
                         <img src="${item.mainImg}" alt="${item.title}">
                     </div>
                     <div class="hidden-views">
-                        ${subImagesHTML} </div>
+                        ${subImagesHTML}
+                    </div>
                 </div>
-
                 <div class="project-info">
                     <h3 class="project-title" style="color:#2c5f2d;">${item.title}</h3>
                     <div class="project-meta">
@@ -95,15 +170,23 @@ function renderGallery() {
                     </div>
                     <p class="project-desc">${item.desc}</p>
                     <div class="project-tags">
-                        ${tagsHTML} </div>
+                        ${tagsHTML}
+                    </div>
                 </div>
             </div>
         `;
+        container.insertAdjacentHTML('beforeend', cardHTML);
     });
 
-    // 완성된 HTML 뭉치를 화면에 뿌리기
-    container.innerHTML = htmlString;
+    currentIndex += nextBatch.length;
+
+    if (currentIndex >= activities.length) {
+        loadMoreBtn.style.display = 'none'; // 다 보여줬으면 버튼 숨김
+    }
 }
 
-// 3. [공장 가동] 페이지가 로드되면 기계를 돌려라!
-document.addEventListener('DOMContentLoaded', renderGallery);
+// 4. [작동 시작]
+document.addEventListener('DOMContentLoaded', () => {
+    renderGallery();
+    document.getElementById('loadMoreBtn').addEventListener('click', renderGallery);
+});
