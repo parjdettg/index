@@ -91,8 +91,7 @@ const activities = [
 
     {
         id: 6,
-        sortDate: "2025-01-19
-        ",
+        sortDate: "2025-01-19",
         title: "취약계층 대상 농촌 힐링 프로그램",
         date: "2025.01.19",
         location: "진주초원 사회적협동조합 공용 텃밭",
