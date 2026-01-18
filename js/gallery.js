@@ -85,7 +85,7 @@ const activities = [
             "images/a5.jpg",
             "images/a6.jpg",
             "images/a7.jpg",
-            "images/a8.jpg",
+            "images/a8.jpg",    
         ]
     },
 
@@ -108,17 +108,16 @@ const activities = [
 
     {
         id: 7,
-        title: "취약계층 대상 농촌 힐링 프로그램",
-        date: "2024.01.19",
-        location: "진주초원 사회적협동조합 공용 텃밭",
-        desc: "지친 일상을 보내는 취약계층 학생들이 평화로운 농촌 자연 속에서 몸과 마음의 온전한 회복을 경험했습니다.",
+        sortDate: "2026-01-15",
+        title: "2026년 청소년 돌봄 사업 시행",
+        date: "2026.01.15",
+        location: "청소년 후원 단체",
+        desc: "사회적협동조합이 취약계층 청소년의 건강한 성장을 위해 따뜻한 나눔을 실천했습니다.",
         tags: ["#심고거둠", "#무럭무럭", "#자라나길"],
-        mainImg: "images/a9.jpg",
+        mainImg: "images/a14.jpg",
         subImgs: [
-            "images/a10.jpg",
-            "images/a11.jpg",
-            "images/a12.jpg",
-            "images/a13.jpg",
+            "images/a14.jpg",
+            "images/a15.jpg",
         ]
     },
 
