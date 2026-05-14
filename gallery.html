@@ -128,17 +128,18 @@
 
             try {
                 // Cloudinary 설정 (실제 값 반영)
-                const cloudName = 'dhzbbdllh'; 
-                const uploadPreset = 'unsigned_preset'; 
-                
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', uploadPreset);
+                const cloudName = 'dhzbbdllh'; // 👈 '네_클라우드_네임' 대신 이걸 정확히 써야 해!
+const uploadPreset = 'unsigned_preset'; // 👈 오타 없는지 꼭 확인!
 
-                const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                    method: 'POST',
-                    body: formData
-                });
+const formData = new FormData();
+formData.append('file', file);
+formData.append('upload_preset', uploadPreset);
+
+// URL 주소에 오타가 없는지도 확인해줘!
+const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: 'POST',
+    body: formData
+});
                 const data = await res.json();
 
                 if (!data.secure_url) throw new Error('이미지 주소 획득 실패');
