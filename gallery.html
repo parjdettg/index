@@ -101,7 +101,7 @@
 
     <script type="module">
         import { auth, db } from './src/firebase.js';
-        import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const loginSection = document.getElementById('login-section');
@@ -118,18 +118,58 @@
             }
         });
 
-        // 2. 로그인 실행
-        document.getElementById('loginBtn').addEventListener('click', async () => {
-            const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                alert('로그인 성공!');
-            } catch (error) {
-                console.error("에러 상세 코드:", error.code);
-                alert('실패 코드: ' + error.code);
-            }
-        });
+        // [교체할 코드 시작]
+
+// 1. 모달 열기/닫기 제어
+const authModal = document.getElementById('authModal');
+document.getElementById('openAuthModal').onclick = () => authModal.style.display = 'flex';
+document.querySelector('.close-modal').onclick = () => authModal.style.display = 'none';
+
+// 2. 로그인 <-> 회원가입 모드 전환 로직
+const switchBtn = document.getElementById('switchBtn');
+const executeBtn = document.getElementById('executeAuthBtn');
+const modalTitle = document.getElementById('modalTitle');
+let signUpMode = false; 
+
+const toggleAuthMode = () => {
+    signUpMode = !signUpMode;
+    modalTitle.innerText = signUpMode ? '관리자 회원가입' : '관리자 로그인';
+    executeBtn.innerText = signUpMode ? '가입하기' : '로그인 실행';
+    document.getElementById('toggleMsg').innerHTML = signUpMode 
+        ? '이미 계정이 있나요? <span id="switchBtn" style="color:#2c5f2d; cursor:pointer; font-weight:bold;">로그인</span>' 
+        : '계정이 없으신가요? <span id="switchBtn" style="color:#2c5f2d; cursor:pointer; font-weight:bold;">회원가입</span>';
+    
+    // 버튼 내용이 바뀌면 클릭 이벤트를 다시 연결해줘야 해
+    document.getElementById('switchBtn').onclick = toggleAuthMode;
+};
+
+switchBtn.onclick = toggleAuthMode;
+
+// 3. 실제 인증 실행 (가입 또는 로그인)
+executeBtn.onclick = async () => {
+    const email = document.getElementById('authEmail').value;
+    const password = document.getElementById('authPassword').value;
+
+    if(!email || !password) return alert('정보를 입력해줘!');
+
+    try {
+        if (signUpMode) {
+            // 회원가입 실행
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert('회원가입 성공! 이제 로그인해줘.');
+            location.reload(); 
+        } else {
+            // 로그인 실행
+            await signInWithEmailAndPassword(auth, email, password);
+            alert('인증 성공! 관리자 모드가 활성화됐어.');
+            authModal.style.display = 'none';
+        }
+    } catch (err) {
+        console.error("에러 발생:", err.code);
+        alert('인증 실패: ' + err.code);
+    }
+};
+
 
         // 3. 로그아웃
         document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
