@@ -114,12 +114,17 @@
         document.getElementById('loginBtn').addEventListener('click', async () => {
             const email = document.getElementById('admin-email').value;
             const password = document.getElementById('admin-password').value;
+
             try {
-                await signInWithEmailAndPassword(auth, email, password);
-                alert('로그인 성공');
-            } catch (error) {
-                alert('아이디와 비밀번호가 일치하지 않습니다.');
-            }
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("로그인 성공 유저:", userCredential.user);
+    alert('로그인 성공!');
+} catch (error) {
+    // 🔴 에러 코드를 구체적으로 출력해서 원인을 Identify(확인)하자
+    console.error("Firebase 에러 코드:", error.code); 
+    console.error("에러 메시지:", error.message);
+    alert('실패 원인: ' + error.code);
+}
         });
 
         // 3. 로그아웃
