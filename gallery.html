@@ -116,9 +116,9 @@
             const password = document.getElementById('admin-password').value;
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                alert('반가워! 관리자로 확인됐어.');
+                alert('로그인 성공');
             } catch (error) {
-                alert('접속 정보가 틀렸어. 다시 확인해줘.');
+                alert('아이디와 비밀번호가 일치하지 않습니다.');
             }
         });
 
