@@ -8,7 +8,6 @@
 </head>
 
 <body class="page-gallery">
-
     <header class="main-header">
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -27,46 +26,36 @@
 
     <section class="activity-section">
         <div class="container">
-            
             <div class="section-title">
                 <h2>활동기록</h2>
                 <p><strong>진주초원이 지역사회와 함께한 따뜻한 동행의 기록입니다.</strong></p>
             </div>
 
             <div id="admin-container" class="container" style="margin-bottom: 40px; text-align: center; background: #f9f9f9; padding: 20px; border-radius: 10px;">
-    <div id="login-section">
-        <p style="margin-bottom: 10px; color: #666;">관리자 권한이 필요한 기능이야.</p>
-        <input type="email" id="admin-email" placeholder="이메일" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-        <input type="password" id="admin-password" placeholder="비밀번호" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-        <button id="loginBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; margin-left: 10px;">로그인</button>
-    </div>
-
-    <div id="upload-section" style="display: none; border: 2px dashed #2c5f2d; padding: 20px; border-radius: 8px;">
-        <h3 style="color: #2c5f2d; margin-bottom: 15px;">✨ 활동 사진 등록 모드</h3>
-        <input type="file" id="photo-input" accept="image/*" style="margin-bottom: 15px;">
-        <input type="text" id="photo-title" placeholder="활동 제목을 적어줘." style="width: 100%; padding: 10px; margin-bottom: 10px;">
-        <button id="uploadBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; background: #2c5f2d;">업로드 실행</button>
-        <button id="logoutBtn" style="background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; margin-left: 15px;">로그아웃</button>
-    </div>
-</div>
-
-            <div class="project-list" id="gallery-grid">
+                <div id="login-section">
+                    <p style="margin-bottom: 10px; color: #666;">관리자 권한이 필요한 기능이야.</p>
+                    <input type="email" id="admin-email" placeholder="이메일" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="password" id="admin-password" placeholder="비밀번호" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <button id="loginBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; margin-left: 10px;">로그인</button>
                 </div>
+
+                <div id="upload-section" style="display: none; border: 2px dashed #2c5f2d; padding: 20px; border-radius: 8px;">
+                    <h3 style="color: #2c5f2d; margin-bottom: 15px;">✨ 활동 사진 등록 모드</h3>
+                    <input type="file" id="photo-input" accept="image/*" style="margin-bottom: 15px;">
+                    <input type="text" id="photo-title" placeholder="활동 제목을 적어줘." style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                    <button id="uploadBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; background: #2c5f2d;">업로드 실행</button>
+                    <button id="logoutBtn" style="background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; margin-left: 15px;">로그아웃</button>
+                </div>
+            </div>
+
+            <div class="project-list" id="gallery-grid"></div>
+
             <div class="load-more-container">
-        <button id="loadMoreBtn" class="btn-load-more">
-            활동 더 보기 <span style="font-size:12px;">▼</span>
-        </button>
-    </div>
-    <section class="partners-section">
-        <div class="container link-container">
-    
-
-<script src="js/gallery.js"></script>
-
-</body>
-</html>              
-
-            </div> </div>
+                <button id="loadMoreBtn" class="btn-load-more">
+                    활동 더 보기 <span style="font-size:12px;">▼</span>
+                </button>
+            </div>
+        </div>
     </section>
 
     <section class="partners-section">
@@ -91,15 +80,15 @@
         </div>
     </footer>
 
-<script type="module">
+    <script type="module">
         import { auth, db } from './src/firebase.js';
         import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const loginSection = document.getElementById('login-section');
         const uploadSection = document.getElementById('upload-section');
 
-        // 1. 로그인 상태 모니터링
+        // 1. 로그인 상태 모니터링 및 UI 전환
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginSection.style.display = 'none';
@@ -114,20 +103,13 @@
         document.getElementById('loginBtn').addEventListener('click', async () => {
             const email = document.getElementById('admin-email').value;
             const password = document.getElementById('admin-password').value;
-
             try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert('로그인 성공!');
-} catch (error) {
-    // 🔴 이 부분이 핵심이야. F12 콘솔에 뜨는 영어를 나에게 알려줘.
-    console.error("에러 상세 코드:", error.code); 
-    
-    if (error.code === 'auth/invalid-api-key') alert('API 키가 잘못됐어. firebase.js를 확인해봐.');
-    else if (error.code === 'auth/network-request-failed') alert('네트워크 연결이 불안정해.');
-    else if (error.code === 'auth/admin-restricted-operation') alert('이 도메인에서는 접근이 차단됐어.');
-    else alert('실패 코드: ' + error.code);
-}
-
+                await signInWithEmailAndPassword(auth, email, password);
+                alert('로그인 성공!');
+            } catch (error) {
+                console.error("에러 상세 코드:", error.code);
+                alert('실패 코드: ' + error.code);
+            }
         });
 
         // 3. 로그아웃
@@ -140,56 +122,65 @@
             
             if (!file || !title) return alert('사진과 제목을 모두 입력해야 해!');
 
-           // ... 기존 코드 (onAuthStateChanged 등) 유지 ...
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.disabled = true;
+            uploadBtn.innerText = '처리 중...';
 
-// gallery.html 하단 스크립트 내 업로드 로직 부분 수정
-document.getElementById('uploadBtn').addEventListener('click', async () => {
-    const file = document.getElementById('photo-input').files[0];
-    const title = document.getElementById('photo-title').value;
-    
-    if (!file || !title) return alert('사진과 제목을 모두 입력해야 해!');
+            try {
+                // Cloudinary 설정 (실제 값 반영)
+                const cloudName = 'dhzbbdllh'; 
+                const uploadPreset = 'unsigned_preset'; 
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', uploadPreset);
 
-    const uploadBtn = document.getElementById('uploadBtn');
-    uploadBtn.disabled = true;
-    uploadBtn.innerText = '처리 중...';
+                const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
 
-    try {
-        // [1] Cloudinary 전송
-        const cloudName = '네_클라우드_네임'; // ⚠️ 메모장 확인
-        const uploadPreset = '네_프리셋_이름'; // ⚠️ 메모장 확인
-        
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', uploadPreset);
+                if (!data.secure_url) throw new Error('이미지 주소 획득 실패');
 
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-            method: 'POST',
-            body: formData
+                // Firestore 저장
+                await addDoc(collection(db, "activities"), {
+                    title: title,
+                    imageUrl: data.secure_url,
+                    createdAt: serverTimestamp()
+                });
+
+                alert('기록이 성공적으로 축적됐다!');
+                document.getElementById('photo-input').value = '';
+                document.getElementById('photo-title').value = '';
+            } catch (e) {
+                alert('에러 발생: ' + e.message);
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.innerText = '업로드 실행';
+            }
         });
-        const data = await res.json();
 
-        // [2] Firestore에 기록 저장
-        await addDoc(collection(db, "activities"), {
-            title: title,
-            imageUrl: data.secure_url,
-            createdAt: serverTimestamp()
+        // 5. 실시간 갤러리 데이터 불러오기
+        const q = query(collection(db, "activities"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = ''; 
+            snapshot.forEach((doc) => {
+                const item = doc.data();
+                const html = `
+                    <div class="project-item">
+                        <img src="${item.imageUrl}" alt="${item.title}">
+                        <div class="project-info">
+                            <h3>${item.title}</h3>
+                            <p>등록일: ${item.createdAt?.toDate().toLocaleDateString() || '방금 전'}</p>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.innerHTML += html;
+            });
         });
-
-        alert('기록이 성공적으로 **Accumulated**(축적)됐어!');
-        location.reload(); // 새로고침해서 결과 확인
-    } catch (e) {
-        alert('에러 발생: ' + e.message);
-    } finally {
-        uploadBtn.disabled = false;
-        uploadBtn.innerText = '업로드 실행';
-    }
-});
-        });
-        import { query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-
     </script>
-
-</body>
+    <script src="js/gallery.js"></script>
 </body>
 </html>
