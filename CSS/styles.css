@@ -659,3 +659,52 @@ footer {
     box-shadow: 0 6px 20px rgba(44, 95, 45, 0.3);
     transform: translateY(-2px); /* 살짝 떠오르는 효과 */
 }
+
+/* 1. 파일 선택 버튼 숨기기 및 커스텀 버튼 스타일 */
+#photo-input {
+    display: none; /* 기본 버튼은 숨김 */
+}
+
+.file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f1f3f5;
+    color: #495057;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    transition: 0.3s;
+    border: 1px solid #ddd;
+}
+
+.file-label:hover {
+    background-color: #e9ecef;
+    border-color: #2c5f2d;
+}
+
+/* 2. 업로드 실행 버튼 현대화 */
+#uploadBtn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #2c5f2d 0%, #4e944f 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(44, 95, 45, 0.2);
+    transition: all 0.3s ease;
+}
+
+#uploadBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(44, 95, 45, 0.3);
+}
+
+#uploadBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}

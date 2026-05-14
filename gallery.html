@@ -67,7 +67,13 @@
 
                 <div id="upload-section" style="display:none; margin: 20px 0; padding: 20px; border: 1px dashed #2c5f2d; border-radius: 15px;">
     <h3>활동 사진 등록</h3>
-    <input type="file" id="photo-input" accept="image/*" style="margin-bottom:10px;">
+
+    <div style="margin-bottom: 15px;">
+    <label for="photo-input" class="file-label">📸 사진 선택하기</label>
+    <input type="file" id="photo-input" accept="image/*">
+    <span id="file-name" style="font-size: 13px; color: #888; margin-left: 10px;">선택된 파일 없음</span>
+</div>
+
     <input type="text" id="photo-title" placeholder="제목" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
     <textarea id="photo-desc" placeholder="내용을 입력하세요" style="width:100%; height:100px; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;"></textarea>
     <button id="uploadBtn" class="btn-full">게시하기</button>
@@ -137,6 +143,9 @@
                 openAuthModalBtn.onclick = () => authModal.style.display = 'flex';
             }
         });
+document.getElementById('photo-input').onchange = function() {
+    document.getElementById('file-name').innerText = this.files[0] ? this.files[0].name : "선택된 파일 없음";
+};
 
         // 3. 모달 제어 (닫기 및 전환)
         document.querySelector('.close-modal').onclick = () => authModal.style.display = 'none';
