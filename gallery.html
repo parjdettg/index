@@ -58,13 +58,13 @@
     </div>
 </div>
 
-                <div id="upload-section" style="display: none; border: 2px dashed #2c5f2d; padding: 20px; border-radius: 8px;">
-                    <h3 style="color: #2c5f2d; margin-bottom: 15px;">활동 사진 등록 모드</h3>
-                    <input type="file" id="photo-input" accept="image/*" style="margin-bottom: 15px;">
-                    <input type="text" id="photo-title" placeholder="활동 제목을 적어줘." style="width: 100%; padding: 10px; margin-bottom: 10px;">
-                    <button id="uploadBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; background: #2c5f2d;">업로드 실행</button>
-                    <button id="logoutBtn" style="background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; margin-left: 15px;">로그아웃</button>
-                </div>
+                <div id="upload-section" style="display:none; margin: 20px 0; padding: 20px; border: 1px dashed #2c5f2d; border-radius: 15px;">
+    <h3>✨ 활동 사진 등록 모드</h3>
+    <input type="file" id="photo-input" accept="image/*" style="margin-bottom:10px;">
+    <input type="text" id="photo-title" placeholder="제목을 입력해줘" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
+    <textarea id="photo-desc" placeholder="내용을 입력해줘" style="width:100%; height:100px; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;"></textarea>
+    <button id="uploadBtn" class="btn-full">업로드 실행</button>
+</div>
             </div>
 
             <div class="project-list" id="gallery-grid"></div>
@@ -147,6 +147,11 @@ switchBtn.onclick = toggleAuthMode;
 
 // 3. 실제 인증 실행 (가입 또는 로그인)
 executeBtn.onclick = async () => {
+    document.getElementById('authPassword').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        executeBtn.click(); // 로그인 버튼을 클릭한 것과 동일하게 작동
+    }
+});
     const email = document.getElementById('authEmail').value;
     const password = document.getElementById('authPassword').value;
 
