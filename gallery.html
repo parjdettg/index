@@ -116,15 +116,18 @@
             const password = document.getElementById('admin-password').value;
 
             try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log("로그인 성공 유저:", userCredential.user);
+    await signInWithEmailAndPassword(auth, email, password);
     alert('로그인 성공!');
 } catch (error) {
-    // 🔴 에러 코드를 구체적으로 출력해서 원인을 Identify(확인)하자
-    console.error("Firebase 에러 코드:", error.code); 
-    console.error("에러 메시지:", error.message);
-    alert('실패 원인: ' + error.code);
+    // 🔴 이 부분이 핵심이야. F12 콘솔에 뜨는 영어를 나에게 알려줘.
+    console.error("에러 상세 코드:", error.code); 
+    
+    if (error.code === 'auth/invalid-api-key') alert('API 키가 잘못됐어. firebase.js를 확인해봐.');
+    else if (error.code === 'auth/network-request-failed') alert('네트워크 연결이 불안정해.');
+    else if (error.code === 'auth/admin-restricted-operation') alert('이 도메인에서는 접근이 차단됐어.');
+    else alert('실패 코드: ' + error.code);
 }
+
         });
 
         // 3. 로그아웃
