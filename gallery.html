@@ -190,3 +190,27 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
 </body>
 </body>
 </html>
+
+import { query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// Firestore에서 데이터를 실시간으로 가져오는 함수
+const q = query(collection(db, "activities"), orderBy("createdAt", "desc"));
+
+onSnapshot(q, (snapshot) => {
+    const galleryGrid = document.getElementById('gallery-grid');
+    galleryGrid.innerHTML = ''; // 기존 내용을 비움
+
+    snapshot.forEach((doc) => {
+        const item = doc.data();
+        const html = `
+            <div class="project-item">
+                <img src="${item.imageUrl}" alt="${item.title}">
+                <div class="project-info">
+                    <h3>${item.title}</h3>
+                    <p>등록일: ${item.createdAt?.toDate().toLocaleDateString() || '방금 전'}</p>
+                </div>
+            </div>
+        `;
+        galleryGrid.innerHTML += html;
+    });
+});
