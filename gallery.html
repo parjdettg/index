@@ -185,13 +185,7 @@ document.getElementById('uploadBtn').addEventListener('click', async () => {
     }
 });
         });
-    </script>
-
-</body>
-</body>
-</html>
-
-import { query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Firestore에서 데이터를 실시간으로 가져오는 함수
 const q = query(collection(db, "activities"), orderBy("createdAt", "desc"));
@@ -214,3 +208,8 @@ onSnapshot(q, (snapshot) => {
         galleryGrid.innerHTML += html;
     });
 });
+    </script>
+
+</body>
+</body>
+</html>
