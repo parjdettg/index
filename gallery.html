@@ -161,21 +161,21 @@
             const password = document.getElementById('authPassword').value;
             const confirmPassword = document.getElementById('authPasswordConfirm').value;
 
-            if(!email || !password) return alert('모든 정보를 입력해줘!');
+            if(!email || !password) return alert('모든 정보를 입력하십시오.');
 
             // ★ 비밀번호 일치 여부 검사
             if (signUpMode && password !== confirmPassword) {
-                return alert('비밀번호가 서로 일치하지 않아. 다시 확인해줘!');
+                return alert('비밀번호가 서로 일치하지 않습니다.');
             }
 
             try {
                 if (signUpMode) {
                     await createUserWithEmailAndPassword(auth, email, password);
-                    alert('성공적으로 가입됐어! 이제 로그인을 진행해줘.');
+                    alert('가입 완료');
                     location.reload();
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
-                    alert('인증 완료!');
+                    alert('인증 완료');
                     authModal.style.display = 'none';
                 }
             } catch (err) {
@@ -193,7 +193,7 @@
             const title = document.getElementById('photo-title').value;
             const desc = document.getElementById('photo-desc').value;
 
-            if (!file || !title || !desc) return alert('모든 항목을 채워줘!');
+            if (!file || !title || !desc) return alert('모든 항목을 채워주십시오!');
             const uploadBtn = document.getElementById('uploadBtn');
             uploadBtn.disabled = true; uploadBtn.innerText = '전송 중...';
 
