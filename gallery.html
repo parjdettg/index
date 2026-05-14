@@ -33,24 +33,31 @@
 
             <div id="admin-container" class="container" style="margin-bottom: 40px; text-align: center; background: #f9f9f9; padding: 20px; border-radius: 10px;">
 
-                <div class="admin-auth-area">
+            <div class="admin-auth-area">
     <button id="openAuthModal" class="btn-modern-outline">Admin Access</button>
 </div>
 
 <div id="authModal" class="modal-overlay">
-    <div class="modal-content">
+    <div class="modal-content modern-glass">
         <span class="close-modal">&times;</span>
         <div id="authHeader">
-            <h2 id="modalTitle">관리자 로그인</h2>
-            <p id="modalSubTitle">접근을 위해 입력하십시오.</p>
+            <h2 id="modalTitle">Admin Login</h2>
+            <p id="modalSubTitle">진주초원 관리자 시스템 인증</p>
         </div>
         
         <div class="auth-fields">
-            <input type="email" id="authEmail" placeholder="Email Address">
-            <input type="password" id="authPassword" placeholder="Password">
+            <div class="input-group">
+                <input type="email" id="authEmail" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="authPassword" placeholder="Password" required>
+            </div>
+            <div class="input-group" id="confirmPasswordGroup" style="display:none;">
+                <input type="password" id="authPasswordConfirm" placeholder="Confirm Password">
+            </div>
         </div>
         
-        <button id="executeAuthBtn" class="btn-full">로그인 실행</button>
+        <button id="executeAuthBtn" class="btn-primary-gradient">로그인 실행</button>
         
         <div class="auth-switcher">
             <p id="toggleMsg">계정이 없으신가요? <span id="switchBtn">회원가입</span></p>
@@ -104,112 +111,104 @@
         import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-       // 1. UI 요소 가져오기
+       // 1. 필요한 요소들 모두 가져오기
         const authModal = document.getElementById('authModal');
         const uploadSection = document.getElementById('upload-section');
         const openAuthModalBtn = document.getElementById('openAuthModal');
         const executeBtn = document.getElementById('executeAuthBtn');
         const switchBtn = document.getElementById('switchBtn');
+        const confirmGroup = document.getElementById('confirmPasswordGroup');
         const modalTitle = document.getElementById('modalTitle');
         let signUpMode = false;
 
-        // 2. 로그인 상태 감지 (UI 전환)
+        // 2. 로그인 상태 모니터링 (UI 자동 전환)
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // 로그인 완료 시
-                uploadSection.style.display = 'block';
+                // 로그인 성공 시: 업로드 창 보여주고 버튼을 'Logout'으로 변경
+                if(uploadSection) uploadSection.style.display = 'block';
                 openAuthModalBtn.innerText = 'Logout';
                 openAuthModalBtn.onclick = () => {
                     if(confirm('로그아웃 하시겠습니까?')) signOut(auth).then(() => location.reload());
                 };
             } else {
-                // 로그아웃 상태 시
-                uploadSection.style.display = 'none';
+                // 로그아웃 시: 업로드 창 숨기고 버튼을 'Admin Access'로 변경
+                if(uploadSection) uploadSection.style.display = 'none';
                 openAuthModalBtn.innerText = 'Admin Access';
                 openAuthModalBtn.onclick = () => authModal.style.display = 'flex';
             }
         });
 
-        // 3. 모달 제어 및 엔터키 로그인
+        // 3. 모달 제어 (닫기 및 전환)
         document.querySelector('.close-modal').onclick = () => authModal.style.display = 'none';
 
-        // ★ 엔터키 입력 시 로그인 실행 (비밀번호 칸에서 작동)
-        document.getElementById('authPassword').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') executeBtn.click();
-        });
-
-        // 회원가입/로그인 모드 전환
-        switchBtn.onclick = () => {
+        const toggleAuthMode = () => {
             signUpMode = !signUpMode;
-            modalTitle.innerText = signUpMode ? '관리자 회원가입' : '관리자 로그인';
+            modalTitle.innerText = signUpMode ? 'Create Account' : 'Admin Login';
             executeBtn.innerText = signUpMode ? '가입하기' : '로그인 실행';
+            confirmGroup.style.display = signUpMode ? 'block' : 'none'; // ★ 회원가입 시에만 확인 칸 노출
+            
             document.getElementById('toggleMsg').innerHTML = signUpMode 
-                ? '이미 계정이 있나요? <span id="switchBtn" style="color:#2c5f2d; cursor:pointer; font-weight:bold;">로그인</span>' 
-                : '계정이 없으신가요? <span id="switchBtn" style="color:#2c5f2d; cursor:pointer; font-weight:bold;">회원가입</span>';
-            document.getElementById('switchBtn').onclick = switchBtn.onclick;
+                ? '이미 계정이 있나요? <span id="switchBtn">로그인</span>' 
+                : '계정이 없으신가요? <span id="switchBtn">회원가입</span>';
+            
+            document.getElementById('switchBtn').onclick = toggleAuthMode;
         };
+        switchBtn.onclick = toggleAuthMode;
 
-        // 실제 인증 실행
+        // 4. 인증 실행 (비밀번호 확인 Verification 로직 포함)
         executeBtn.onclick = async () => {
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
-            if(!email || !password) return alert('정보 입력');
+            const confirmPassword = document.getElementById('authPasswordConfirm').value;
+
+            if(!email || !password) return alert('모든 정보를 입력해줘!');
+
+            // ★ 비밀번호 일치 여부 검사
+            if (signUpMode && password !== confirmPassword) {
+                return alert('비밀번호가 서로 일치하지 않아. 다시 확인해줘!');
+            }
 
             try {
                 if (signUpMode) {
                     await createUserWithEmailAndPassword(auth, email, password);
-                    alert('가입 성공');
+                    alert('성공적으로 가입됐어! 이제 로그인을 진행해줘.');
                     location.reload();
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
-                    alert('인증 성공');
+                    alert('인증 완료!');
                     authModal.style.display = 'none';
                 }
             } catch (err) {
-                alert('에러: ' + err.code);
+                alert('인증 실패: ' + err.code);
             }
         };
 
-        // 4. 활동 기록 업로드 (내용 + 날짜 자동 포함)
+        // 엔터키 지원 및 업로드 로직 (기존 기능 통합)
+        document.querySelectorAll('.auth-fields input').forEach(input => {
+            input.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeBtn.click(); });
+        });
+
         document.getElementById('uploadBtn').onclick = async () => {
             const file = document.getElementById('photo-input').files[0];
             const title = document.getElementById('photo-title').value;
-            const desc = document.getElementById('photo-desc').value; // 내용 가져오기
+            const desc = document.getElementById('photo-desc').value;
 
-            if (!file || !title || !desc) return alert('사진, 제목, 내용을 모두 채워줘!');
-
+            if (!file || !title || !desc) return alert('모든 항목을 채워줘!');
             const uploadBtn = document.getElementById('uploadBtn');
-            uploadBtn.disabled = true;
-            uploadBtn.innerText = '전송 중...';
+            uploadBtn.disabled = true; uploadBtn.innerText = '전송 중...';
 
             try {
-                // Cloudinary 업로드
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', 'unsigned_preset');
-                
-                const res = await fetch(`https://api.cloudinary.com/v1_1/dhzbbdllh/image/upload`, {
-                    method: 'POST',
-                    body: formData
-                });
+                const res = await fetch(`https://api.cloudinary.com/v1_1/dhzbbdllh/image/upload`, { method: 'POST', body: formData });
                 const cloudData = await res.json();
 
-                // Firestore 저장 (날짜 Automatic 기록)
                 await addDoc(collection(db, "activities"), {
-                    title: title,
-                    desc: desc,
-                    imageUrl: cloudData.secure_url,
-                    createdAt: serverTimestamp() 
+                    title: title, desc: desc, imageUrl: cloudData.secure_url, createdAt: serverTimestamp() 
                 });
-
-                alert('등록 완료!');
-                location.reload();
-            } catch (e) {
-                alert('업로드 실패: ' + e.message);
-            } finally {
-                uploadBtn.disabled = false;
-                uploadBtn.innerText = '업로드 실행';
-            }
+                alert('등록 완료!'); location.reload();
+            } catch (e) { alert('업로드 실패'); } finally { uploadBtn.disabled = false; uploadBtn.innerText = '업로드 실행'; }
         };
 
         // 5. 실시간 갤러리 데이터 불러오기
