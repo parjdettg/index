@@ -32,12 +32,31 @@
             </div>
 
             <div id="admin-container" class="container" style="margin-bottom: 40px; text-align: center; background: #f9f9f9; padding: 20px; border-radius: 10px;">
-                <div id="login-section">
-                    <p style="margin-bottom: 10px; color: #666;">관리자 로그인.</p>
-                    <input type="email" id="admin-email" placeholder="이메일" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    <input type="password" id="admin-password" placeholder="비밀번호" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    <button id="loginBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; margin-left: 10px;">로그인</button>
-                </div>
+
+                <div class="admin-auth-area">
+    <button id="openAuthModal" class="btn-modern-outline">Admin Access</button>
+</div>
+
+<div id="authModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="authHeader">
+            <h2 id="modalTitle">관리자 로그인</h2>
+            <p id="modalSubTitle">진주초원 시스템 접속을 위해 인증해줘.</p>
+        </div>
+        
+        <div class="auth-fields">
+            <input type="email" id="authEmail" placeholder="Email Address">
+            <input type="password" id="authPassword" placeholder="Password">
+        </div>
+        
+        <button id="executeAuthBtn" class="btn-full">로그인 실행</button>
+        
+        <div class="auth-switcher">
+            <p id="toggleMsg">계정이 없으신가요? <span id="switchBtn">회원가입</span></p>
+        </div>
+    </div>
+</div>
 
                 <div id="upload-section" style="display: none; border: 2px dashed #2c5f2d; padding: 20px; border-radius: 8px;">
                     <h3 style="color: #2c5f2d; margin-bottom: 15px;">활동 사진 등록 모드</h3>
