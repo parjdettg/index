@@ -3,7 +3,7 @@
    ========================================================================== */
 
 // 1. [데이터 창고] 여기에 활동 내용을 계속 추가하면 됩니다. (수천 개도 가능!)
-const activities = [
+const activityData = [
     {
         id: 1,
         sortDate: "2025-03-17",
@@ -159,11 +159,11 @@ function renderGallery() {
     const container = document.getElementById('gallery-grid');
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     
-    activities.sort((a, b) => {
+    activityData.sort((a, b) => {
         return new Date(b.sortDate) - new Date(a.sortDate);
     });
 
-    const nextBatch = activities.slice(currentIndex, currentIndex + itemsPerLoad);
+    const nextBatch = activityData.slice(currentIndex, currentIndex + itemsPerLoad);
 
     nextBatch.forEach(item => {
         let subImagesHTML = '';
@@ -204,7 +204,7 @@ function renderGallery() {
 
     currentIndex += nextBatch.length;
 
-    if (currentIndex >= activities.length) {
+    if (currentIndex >= activityData.length) {
         loadMoreBtn.style.display = 'none'; // 다 보여줬으면 버튼 숨김
     }
 }
