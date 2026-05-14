@@ -153,16 +153,16 @@
         executeBtn.onclick = async () => {
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
-            if(!email || !password) return alert('정보를 모두 입력해줘!');
+            if(!email || !password) return alert('정보 입력');
 
             try {
                 if (signUpMode) {
                     await createUserWithEmailAndPassword(auth, email, password);
-                    alert('가입 성공! 이제 로그인해줘.');
+                    alert('가입 성공');
                     location.reload();
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
-                    alert('인증 성공!');
+                    alert('인증 성공');
                     authModal.style.display = 'none';
                 }
             } catch (err) {
