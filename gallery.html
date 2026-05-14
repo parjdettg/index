@@ -33,6 +33,23 @@
                 <p><strong>진주초원이 지역사회와 함께한 따뜻한 동행의 기록입니다.</strong></p>
             </div>
 
+            <div id="admin-container" class="container" style="margin-bottom: 40px; text-align: center; background: #f9f9f9; padding: 20px; border-radius: 10px;">
+    <div id="login-section">
+        <p style="margin-bottom: 10px; color: #666;">관리자 권한이 필요한 기능이야.</p>
+        <input type="email" id="admin-email" placeholder="이메일" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        <input type="password" id="admin-password" placeholder="비밀번호" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        <button id="loginBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; margin-left: 10px;">로그인</button>
+    </div>
+
+    <div id="upload-section" style="display: none; border: 2px dashed #2c5f2d; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #2c5f2d; margin-bottom: 15px;">✨ 활동 사진 등록 모드</h3>
+        <input type="file" id="photo-input" accept="image/*" style="margin-bottom: 15px;">
+        <input type="text" id="photo-title" placeholder="활동 제목을 적어줘." style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        <button id="uploadBtn" class="btn-load-more" style="width: auto; padding: 10px 25px; background: #2c5f2d;">업로드 실행</button>
+        <button id="logoutBtn" style="background: none; border: none; color: #999; text-decoration: underline; cursor: pointer; margin-left: 15px;">로그아웃</button>
+    </div>
+</div>
+
             <div class="project-list" id="gallery-grid">
                 </div>
             <div class="load-more-container">
@@ -74,5 +91,107 @@
         </div>
     </footer>
 
+<script type="module">
+        import { auth, db } from './src/firebase.js';
+        import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const loginSection = document.getElementById('login-section');
+        const uploadSection = document.getElementById('upload-section');
+
+        // 1. 로그인 상태 모니터링
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginSection.style.display = 'none';
+                uploadSection.style.display = 'block';
+            } else {
+                loginSection.style.display = 'block';
+                uploadSection.style.display = 'none';
+            }
+        });
+
+        // 2. 로그인 실행
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert('반가워! 관리자로 확인됐어.');
+            } catch (error) {
+                alert('접속 정보가 틀렸어. 다시 확인해줘.');
+            }
+        });
+
+        // 3. 로그아웃
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+        // 4. 사진 업로드 (Cloudinary + Firestore)
+        document.getElementById('uploadBtn').addEventListener('click', async () => {
+            const file = document.getElementById('photo-input').files[0];
+            const title = document.getElementById('photo-title').value;
+            
+            if (!file || !title) return alert('사진과 제목을 모두 입력해야 해!');
+
+           // ... 기존 코드 (onAuthStateChanged 등) 유지 ...
+
+// 4. 사진 업로드 실행 (Cloudinary 전송 -> Firestore 기록)
+document.getElementById('uploadBtn').addEventListener('click', async () => {
+    const fileInput = document.getElementById('photo-input');
+    const titleInput = document.getElementById('photo-title');
+    const file = fileInput.files[0];
+    const title = titleInput.value;
+    
+    if (!file || !title) return alert('사진과 제목을 모두 입력해야 해!');
+
+    // 버튼 비활성화 (중복 클릭 방지)
+    const uploadBtn = document.getElementById('uploadBtn');
+    uploadBtn.disabled = true;
+    uploadBtn.innerText = '업로드 중...';
+
+    try {
+        // [A] Cloudinary에 사진 전송
+        const cloudName = 'dhzbbdllh'; // ⚠️ 메모장 확인!
+        const uploadPreset = 'unsigned_preset'; // ⚠️ 메모장 확인!
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', uploadPreset);
+
+        const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: 'POST',
+            body: formData
+        });
+
+        const cloudData = await cloudinaryResponse.json();
+        const imageUrl = cloudData.secure_url; // 업로드된 사진의 진짜 주소!
+
+        if (!imageUrl) throw new Error('Cloudinary 업로드 실패');
+
+        // [B] Firestore에 게시글 정보 저장
+        await addDoc(collection(db, "activities"), {
+            title: title,
+            imageUrl: imageUrl,
+            createdAt: serverTimestamp()
+        });
+
+        alert('활동 기록이 성공적으로 등록됐어! 🎉');
+        
+        // 입력창 초기화
+        fileInput.value = '';
+        titleInput.value = '';
+        
+    } catch (error) {
+        console.error(error);
+        alert('업로드 중 문제가 생겼어. 설정을 다시 확인해봐.');
+    } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.innerText = '업로드 실행';
+    }
+});
+        });
+    </script>
+
+    <script src="js/gallery.js"></script>
+</body>
 </body>
 </html>
