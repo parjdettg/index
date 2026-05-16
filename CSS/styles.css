@@ -374,17 +374,15 @@ body, html {
     font-size: 1.8rem; }
 .section-title { margin-bottom: 40px; }
 
-/* ==========================================================================
-   ★ [[최종 통합]] 활동기록 + 정보공개 + 파트너 + 푸터 + 모바일 ★
-   (중복 제거 및 JS 자동화 완벽 호환 버전)
-   ========================================================================== */
 
 /* 1. 활동기록 (Gallery) - JS 자동화 및 매직앨범 대응 */
 .project-card {
     display: flex !important; align-items: flex-start;
-    background: white; border-radius: 15px; overflow: hidden;
+    background: white; border-radius: 15px; 
+    overflow: visible;
     box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: 1px solid #eee;
     margin-bottom: 50px; transition: all 0.3s ease; width: 100%;
+    height: auto;
 }
 .project-card:hover {
     transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12);
@@ -415,7 +413,11 @@ body, html {
 .project-meta { margin-bottom: 20px; color: #666; font-size: 0.95rem; }
 .project-meta span { display: inline-block; margin-right: 15px; }
 .project-desc {
-    line-height: 1.8; color: #444; margin-bottom: 25px; word-break: keep-all;
+    line-height: 1.8; 
+    color: #444; 
+    margin-bottom: 25px; 
+    word-break: break-all;
+    display: block;
 }
 .project-tags span {
     display: inline-block; background-color: #f1f3f5; color: #495057;
