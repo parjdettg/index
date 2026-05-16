@@ -73,15 +73,14 @@
     </div>
 </div>
 
-                <div id="upload-section" style="display:none; margin: 20px 0; padding: 20px; border: 1px dashed #2c5f2d; border-radius: 15px;">
+<div id="upload-section" style="display:none; margin: 20px 0; padding: 20px; border: 1px dashed #2c5f2d; border-radius: 15px;">
     <h3>활동 사진 등록</h3>
-
     <div style="margin-bottom: 15px;">
     <label for="photo-input" class="file-label">사진 선택하기</label>
     <input type="file" id="photo-input" accept="image/*">
     <span id="file-name" style="font-size: 13px; color: #888; margin-left: 10px;">선택된 파일 없음</span>
 </div>
-
+    <input type="date" id="photo-date" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
     <input type="text" id="photo-title" placeholder="제목" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
     <textarea id="photo-desc" placeholder="내용을 입력하세요" style="width:100%; height:100px; padding:10px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;"></textarea>
     <button id="uploadBtn" class="btn-full">게시하기</button>
@@ -152,7 +151,7 @@
             }
         });
 document.getElementById('photo-input').onchange = function() {
-    document.getElementById('file-name').innerText = this.files[0] ? this.files[0].name : "선택된 파일 없음";
+document.getElementById('file-name').innerText = this.files[0] ? this.files[0].name : "선택된 파일 없음";
 };
 
         // 3. 모달 제어 (닫기 및 전환)
@@ -206,11 +205,17 @@ document.getElementById('photo-input').onchange = function() {
         });
 
         document.getElementById('uploadBtn').onclick = async () => {
+
+            const user = auth.currentUser;
+            const ALLOWED_ADMIN = 'ks0193@naver.com'; 
+            if (!user || user.email !== ALLOWED_ADMIN) return alert('글 작성 권한이 없는 계정이야.');
+
             const file = document.getElementById('photo-input').files[0];
             const title = document.getElementById('photo-title').value;
             const desc = document.getElementById('photo-desc').value;
+            const date = document.getElementById('photo-date').value;
 
-            if (!file || !title || !desc) return alert('모든 항목을 채워주십시오!');
+            if (!file || !title || !desc || !date) return alert('모든 항목을 채워주십시오!');
             const uploadBtn = document.getElementById('uploadBtn');
             uploadBtn.disabled = true; uploadBtn.innerText = '전송 중...';
 
@@ -222,7 +227,11 @@ document.getElementById('photo-input').onchange = function() {
                 const cloudData = await res.json();
 
                 await addDoc(collection(db, "activities"), {
-                    title: title, desc: desc, imageUrl: cloudData.secure_url, createdAt: serverTimestamp() 
+                    title: title, 
+                    desc: desc,
+                    photoDate: date,
+                    imageUrl: cloudData.secure_url, 
+                    createdAt: serverTimestamp() 
                 });
                 alert('등록 완료!'); location.reload();
             } catch (e) { alert('업로드 실패'); } finally { uploadBtn.disabled = false; uploadBtn.innerText = '업로드 실행'; }
