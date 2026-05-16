@@ -207,8 +207,10 @@ document.getElementById('file-name').innerText = this.files[0] ? this.files[0].n
         document.getElementById('uploadBtn').onclick = async () => {
 
             const user = auth.currentUser;
-            const ALLOWED_ADMIN = 'ks0193@naver.com'; 
-            if (!user || user.email !== ALLOWED_ADMIN) return alert('글 작성 권한이 없는 계정이야.');
+            const ALLOWED_ADMINS = ['ks0193@naver.com', 'dbag7351@naver.com'];
+            if (!user || !ALLOWED_ADMINS.includes(user.email)) {
+                return alert('글 작성 권한이 없는 계정입니다.');
+            }
 
             const file = document.getElementById('photo-input').files[0];
             const title = document.getElementById('photo-title').value;
