@@ -206,8 +206,19 @@ document.getElementById('file-name').innerText = this.files[0] ? this.files[0].n
             input.addEventListener('keypress', (e) => { if (e.key === 'Enter') executeBtn.click(); });
         });
 
-        document.getElementById('uploadBtn').onclick = async () => {
+let currentEditId = null;
+window.prepareEdit = (id, title, desc, date) => {
+    currentEditId = id;
+    document.getElementById('photo-title').value = title;
+    document.getElementById('photo-desc').value = desc;
+    document.getElementById('photo-date').value = date;
+    const uploadBtn = document.getElementById('uploadBtn');
+    if (uploadBtn) uploadBtn.innerText = '수정 완료';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
+
+document.getElementById('uploadBtn').onclick = async () => {
             const user = auth.currentUser;
             const ALLOWED_ADMINS = ['ks0193@naver.com', 'dbag7351@naver.com'];
             if (!user || !ALLOWED_ADMINS.includes(user.email)) {
@@ -219,26 +230,57 @@ document.getElementById('file-name').innerText = this.files[0] ? this.files[0].n
             const desc = document.getElementById('photo-desc').value;
             const date = document.getElementById('photo-date').value;
 
-            if (!file || !title || !desc || !date) return alert('모든 항목을 채워주십시오!');
+            // 🟢 새 글 등록일 때만 사진 필수 검증! 수정 모드일 때는 사진 선택 안 해도 통과됨
+            if (!currentEditId && !file) return alert('사진을 선택해주십시오!');
+            if (!title || !desc || !date) return alert('모든 항목을 채워주십시오!');
+            
             const uploadBtn = document.getElementById('uploadBtn');
             uploadBtn.disabled = true; uploadBtn.innerText = '전송 중...';
 
             try {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('upload_preset', 'unsigned_preset');
-                const res = await fetch(`https://api.cloudinary.com/v1_1/dhzbbdllh/image/upload`, { method: 'POST', body: formData });
-                const cloudData = await res.json();
+                let finalImageUrl = null;
 
-                await addDoc(collection(db, "activities"), {
-                    title: title, 
-                    desc: desc,
-                    photoDate: date,
-                    imageUrl: cloudData.secure_url, 
-                    createdAt: serverTimestamp() 
-                });
-                alert('등록 완료!'); location.reload();
-            } catch (e) { alert('업로드 실패'); } finally { uploadBtn.disabled = false; uploadBtn.innerText = '업로드 실행'; }
+                // 새로운 사진 파일이 선택되었을 때만 Cloudinary 업로드를 실행(Execute)
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', 'unsigned_preset');
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/dhzbbdllh/image/upload`, { method: 'POST', body: formData });
+                    const cloudData = await res.json();
+                    finalImageUrl = cloudData.secure_url;
+                }
+
+                if (currentEditId) {
+                    // 🟢 [수정 모드] 기존 데이터 갱신 (Update)
+                    const updateData = {
+                        title: title,
+                        desc: desc,
+                        photoDate: date
+                    };
+                    
+                    // 새 사진을 고른 경우에만 이미지 주소 변경값 추가
+                    if (finalImageUrl) {
+                        updateData.imageUrl = finalImageUrl;
+                    }
+
+                    // 파이어베이스 데이터 서버에 수정본 반영
+                    await updateDoc(doc(db, "activities", currentEditId), updateData);
+                    alert('수정 완료!');
+                    currentEditId = null; // 수정 종료 후 ID 초기화
+                } else {
+                    // [신규 등록 모드] 기존의 새 글 저장 로직 작동
+                    await addDoc(collection(db, "activities"), {
+                        title: title, desc: desc, photoDate: date, imageUrl: finalImageUrl, createdAt: serverTimestamp() 
+                    });
+                    alert('등록 완료!');
+                }
+                location.reload();
+            } catch (e) { 
+                alert('업로드 실패: ' + e.message); 
+            } finally { 
+                uploadBtn.disabled = false; 
+                uploadBtn.innerText = '업로드 실행'; 
+            }
         };
 
         // 5. 실시간 갤러리 데이터 불러오기
