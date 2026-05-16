@@ -301,9 +301,9 @@ document.getElementById('uploadBtn').onclick = async () => {
             }
         };
 
-        // 5. 실시간 갤러리 데이터 불러오기
-        const q = query(collection(db, "activities"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
+// 5. 실시간 갤러리 데이터 불러오기
+const q = query(collection(db, "activities"), orderBy("createdAt", "desc"));
+onSnapshot(q, (snapshot) => {
     const galleryGrid = document.getElementById('gallery-grid');
     if (!galleryGrid) return;
     
@@ -316,6 +316,8 @@ document.getElementById('uploadBtn').onclick = async () => {
 
         const user = auth.currentUser;
         const ALLOWED_ADMINS = ['ks0193@naver.com', 'dbag7351@naver.com'];
+        
+        // 🟢 수정/삭제 버튼 세트 변수 정의
         const adminBtnsHtml = (user && ALLOWED_ADMINS.includes(user.email)) 
             ? `<div style="display: flex; gap: 10px; margin-top: 15px;">
                  <button onclick="prepareEdit('${docId}', \`${item.title}\`, \`${item.desc || ''}\`, '${item.photoDate || ''}')" 
@@ -349,7 +351,7 @@ document.getElementById('uploadBtn').onclick = async () => {
                         <span>#진주초원</span><span>#실시간업데이트</span>
                     </div>
                     
-                    ${editBtnHtml}
+                    ${adminBtnsHtml}
                 </div>
             </div>
         `;
