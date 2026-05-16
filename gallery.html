@@ -124,7 +124,7 @@
     <script type="module">
         import { auth, db } from './src/firebase.js';
         import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
        // 1. 필요한 요소들 모두 가져오기
         const authModal = document.getElementById('authModal');
@@ -217,6 +217,24 @@ window.prepareEdit = (id, title, desc, date) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
+window.deleteActivity = async (id) => {
+    const user = auth.currentUser;
+    const ALLOWED_ADMINS = ['ks0193@naver.com', 'dbag7351@naver.com'];
+    
+    if (!user || !ALLOWED_ADMINS.includes(user.email)) {
+        return alert('글 삭제 권한이 없는 계정입니다.');
+    }
+
+    if (confirm('정말로 이 게시글을 영구히 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+        try {
+            await deleteDoc(doc(db, "activities", id));
+            alert('성공적으로 삭제되었습니다.');
+            location.reload();
+        } catch (e) {
+            alert('삭제 중 오류 발생: ' + e.message);
+        }
+    }
+};
 
 document.getElementById('uploadBtn').onclick = async () => {
             const user = auth.currentUser;
@@ -298,11 +316,17 @@ document.getElementById('uploadBtn').onclick = async () => {
 
         const user = auth.currentUser;
         const ALLOWED_ADMINS = ['ks0193@naver.com', 'dbag7351@naver.com'];
-        const editBtnHtml = (user && ALLOWED_ADMINS.includes(user.email)) 
-            ? `<button onclick="prepareEdit('${docId}', \`${item.title}\`, \`${item.desc || ''}\`, '${item.photoDate || ''}')" 
-                       style="margin-top:15px; background:#2c5f2d; color:#fff; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:13px; display:block;">
-                 수정하기
-               </button>` 
+        const adminBtnsHtml = (user && ALLOWED_ADMINS.includes(user.email)) 
+            ? `<div style="display: flex; gap: 10px; margin-top: 15px;">
+                 <button onclick="prepareEdit('${docId}', \`${item.title}\`, \`${item.desc || ''}\`, '${item.photoDate || ''}')" 
+                         style="background:#2c5f2d; color:#fff; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:13px;">
+                   수정하기
+                 </button>
+                 <button onclick="deleteActivity('${docId}')" 
+                         style="background:#bc2a2a; color:#fff; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:13px;">
+                   삭제하기
+                 </button>
+               </div>` 
             : '';
 
         const html = `
