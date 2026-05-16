@@ -249,7 +249,17 @@ document.getElementById('file-name').innerText = this.files[0] ? this.files[0].n
 
     snapshot.forEach((doc) => {
         const item = doc.data();
+        const docId = doc.id;
         const dateStr = item.photoDate || item.createdAt?.toDate().toLocaleDateString('ko-KR') || '방금 전';
+
+        const user = auth.currentUser;
+        const ALLOWED_ADMINS = ['ks0193@naver.com', 'dbag7351@naver.com'];
+        const editBtnHtml = (user && ALLOWED_ADMINS.includes(user.email)) 
+            ? `<button onclick="prepareEdit('${docId}', \`${item.title}\`, \`${item.desc || ''}\`, '${item.photoDate || ''}')" 
+                       style="margin-top:15px; background:#2c5f2d; color:#fff; border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-size:13px; display:block;">
+                 수정하기
+               </button>` 
+            : '';
 
         const html = `
             <div class="project-card">
@@ -270,6 +280,8 @@ document.getElementById('file-name').innerText = this.files[0] ? this.files[0].n
                     <div class="project-tags">
                         <span>#진주초원</span><span>#실시간업데이트</span>
                     </div>
+                    
+                    ${editBtnHtml}
                 </div>
             </div>
         `;
